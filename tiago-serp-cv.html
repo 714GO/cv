@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tiago Barros — Search Results</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: arial, sans-serif;
+    background: #fff;
+    color: #202124;
+    font-size: 14px;
+    line-height: 1.58;
+  }
+
+  /* ── HEADER ── */
+  .g-header {
+    border-bottom: 1px solid #ebebeb;
+    padding: 16px 0 0;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 100;
+  }
+
+  .g-header-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .g-logo {
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .g-logo .g-b { color: #4285F4; }
+  .g-logo .g-r { color: #EA4335; }
+  .g-logo .g-y { color: #FBBC05; }
+  .g-logo .g-gb { color: #4285F4; }
+  .g-logo .g-gr { color: #34A853; }
+  .g-logo .g-ge { color: #EA4335; }
+
+  .g-search-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .g-search-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    padding: 8px 16px 8px 20px;
+    width: 580px;
+    max-width: 100%;
+    box-shadow: none;
+    transition: box-shadow .15s;
+  }
+  .g-search-box:hover { box-shadow: 0 1px 6px rgba(32,33,36,.28); border-color: rgba(223,225,229,0); }
+
+  .g-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #202124;
+    font-family: arial, sans-serif;
+    background: transparent;
+  }
+
+  .g-search-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #9aa0a6;
+  }
+
+  .g-search-icons svg { cursor: pointer; }
+
+  .g-nav {
+    display: flex;
+    gap: 0;
+    font-size: 13px;
+    color: #70757a;
+    border-top: 1px solid #ebebeb;
+    margin-top: 4px;
+  }
+
+  .g-nav-item {
+    padding: 10px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 3px solid transparent;
+    color: #70757a;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .g-nav-item.active {
+    color: #1a73e8;
+    border-bottom-color: #1a73e8;
+  }
+  .g-nav-item:hover { color: #202124; background: #f8f9fa; }
+
+  /* ── BODY ── */
+  .g-body {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 32px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+
+  /* ── RESULT META ── */
+  .g-result-count {
+    font-size: 13px;
+    color: #70757a;
+    margin-bottom: 20px;
+  }
+  .g-result-count span { color: #202124; }
+
+  /* ── ORGANIC RESULT ── */
+  .g-result {
+    margin-bottom: 28px;
+  }
+
+  .g-result-url-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .g-favicon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .fav-blue  { background: #4285F4; }
+  .fav-red   { background: #EA4335; }
+  .fav-green { background: #34A853; }
+  .fav-gold  { background: #FBBC05; color: #202124; }
+  .fav-dark  { background: #202124; }
+
+  .g-result-source {
+    font-size: 14px;
+    color: #202124;
+    line-height: 1.4;
+  }
+
+  .g-result-source-url {
+    font-size: 12px;
+    color: #70757a;
+  }
+
+  .g-result-title {
+    font-size: 20px;
+    font-weight: 400;
+    color: #1a0dab;
+    line-height: 1.3;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .g-result-title:hover { text-decoration: underline; }
+  .g-result-title:visited { color: #681da8; }
+
+  .g-result-snippet {
+    font-size: 14px;
+    color: #4d5156;
+    line-height: 1.58;
+    max-width: 640px;
+  }
+
+  .g-result-snippet strong { color: #202124; font-weight: 700; }
+
+  .g-sitelinks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 24px;
+    margin-top: 8px;
+    max-width: 580px;
+  }
+
+  .g-sitelink {
+    font-size: 14px;
+    color: #1a0dab;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 0;
+    border-top: 1px solid #ebebeb;
+  }
+  .g-sitelink:hover { text-decoration: underline; background: #f8f9fa; padding-left: 4px; }
+
+  .g-date {
+    font-size: 14px;
+    color: #70757a;
+    margin-right: 6px;
+  }
+
+  /* ── FEATURED SNIPPET ── */
+  .g-featured {
+    border: 1px solid #dfe1e5;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    max-width: 660px;
+  }
+
+  .g-featured-label {
+    font-size: 12px;
+    color: #70757a;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .g-featured-content {
+    font-size: 14px;
+    color: #202124;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .g-featured-source {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .g-featured-source a {
+    color: #1a0dab;
+    text-decoration: none;
+  }
+  .g-featured-source a:hover { text-decoration: underline; }
+
+  /* ── PEOPLE ALSO ASK ── */
+  .paa-section {
+    margin-bottom: 28px;
+    max-width: 660px;
+  }
+
+  .paa-title {
+    font-size: 19px;
+    font-weight: 400;
+    color: #202124;
+    margin-bottom: 12px;
+  }
+
+  .paa-item {
+    border: 1px solid #dfe1e5;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .paa-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #202124;
+    font-weight: 400;
+    background: #fff;
+    user-select: none;
+  }
+  .paa-question:hover { background: #f8f9fa; }
+
+  .paa-chevron {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: #70757a;
+    transition: transform .2s;
+  }
+  .paa-chevron.open { transform: rotate(180deg); }
+
+  .paa-answer {
+    display: none;
+    border-top: 1px solid #ebebeb;
+    padding: 16px;
+    background: #fff;
+  }
+  .paa-answer.open { display: block; }
+
+  .paa-answer-text {
+    font-size: 14px;
+    color: #202124;
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  .paa-answer-source {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .paa-answer-source a {
+    color: #1a0dab;
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .paa-answer-source a:hover { text-decoration: underline; }
+
+  /* ── KNOWLEDGE PANEL ── */
+  .g-kp {
+    border: 1px solid #dfe1e5;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 14px;
+    align-self: start;
+    position: sticky;
+    top: 100px;
+  }
+
+  .g-kp-image {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #003087 0%, #1a50a8 50%, #003087 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    font-weight: 900;
+    color: rgba(255,255,255,.15);
+    font-family: georgia, serif;
+    letter-spacing: -4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .g-kp-image-initials {
+    font-size: 72px;
+    font-weight: 700;
+    color: rgba(255,255,255,.9);
+    font-family: georgia, serif;
+    position: relative;
+    z-index: 1;
+  }
+
+  .g-kp-body { padding: 16px; }
+
+  .g-kp-name {
+    font-size: 22px;
+    font-weight: 400;
+    color: #202124;
+    margin-bottom: 2px;
+  }
+
+  .g-kp-type {
+    font-size: 14px;
+    color: #70757a;
+    margin-bottom: 12px;
+  }
+
+  .g-kp-desc {
+    font-size: 13px;
+    color: #4d5156;
+    line-height: 1.58;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  .g-kp-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .g-kp-label {
+    color: #70757a;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  .g-kp-value {
+    color: #202124;
+  }
+
+  .g-kp-value a {
+    color: #1a0dab;
+    text-decoration: none;
+  }
+  .g-kp-value a:hover { text-decoration: underline; }
+
+  .g-kp-socials {
+    display: flex;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #ebebeb;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .g-kp-social-btn {
+    border: 1px solid #dfe1e5;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: #1a0dab;
+    text-decoration: none;
+    transition: background .15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .g-kp-social-btn:hover { background: #f8f9fa; text-decoration: underline; }
+
+  /* ── SEARCH TOOLS BAR ── */
+  .g-tools {
+    font-size: 13px;
+    color: #70757a;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .g-tools span {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .g-tools span:hover { color: #1a73e8; }
+
+  .g-divider {
+    border: none;
+    border-top: 1px solid #ebebeb;
+    margin: 24px 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .g-body { grid-template-columns: 1fr; }
+    .g-kp { display: none; }
+    .g-search-box { width: 100%; }
+    .g-sitelinks { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .g-header { position: static; }
+    .g-kp { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="g-header">
+  <div class="g-header-inner">
+    <a class="g-logo" href="#">
+      <span class="g-b">G</span><span class="g-r">o</span><span class="g-y">o</span><span class="g-gb">g</span><span class="g-gr">l</span><span class="g-ge">e</span>
+    </a>
+    <div class="g-search-row">
+      <div class="g-search-box">
+        <input class="g-search-input" type="text" value="Tiago Barros Global Content Strategy Manager" readonly />
+        <div class="g-search-icons">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <nav class="g-nav">
+      <a class="g-nav-item active" href="#">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        All
+      </a>
+      <a class="g-nav-item" href="https://714go.github.io" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+        Portfolio
+      </a>
+      <a class="g-nav-item" href="https://linkedin.com/in/barros-tiago-/" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v16H4z"/></svg>
+        LinkedIn
+      </a>
+      <a class="g-nav-item" href="https://orcid.org/0009-0004-1927-5925" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Research
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ── BODY ── -->
+<main class="g-body">
+  <div class="g-main">
+
+    <p class="g-result-count">About <span>4 results</span> for Tiago Barros — Global Content & Editorial Strategy</p>
+
+    <div class="g-tools">
+      <span>📍 Amsterdam, NL</span>
+      <span>🕐 Available immediately</span>
+      <span>🌍 Open to Rabobank W&R</span>
+    </div>
+
+    <!-- FEATURED SNIPPET -->
+    <div class="g-featured">
+      <div class="g-featured-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#70757a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Featured result
+      </div>
+      <div class="g-featured-content">
+        Tiago Barros is a <strong>global content strategy and GEO specialist</strong> with 4+ years building content operating models, editorial governance frameworks, and AI-first discoverability strategies across international multi-market environments. He built the European Central Bank's first Generative Engine Optimisation framework across 24 EU language markets and is a <strong>published researcher in AI-driven marketing</strong>.
+      </div>
+      <div class="g-featured-source">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div style="font-size:13px; color:#202124;">714go.github.io</div>
+          <a href="https://714go.github.io" target="_blank">714go.github.io — Full Portfolio & CV →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT 1 — Portfolio -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros</div>
+          <div class="g-result-source-url">714go.github.io</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io" target="_blank">
+        Tiago Barros — Digital Strategy & Communications Specialist
+      </a>
+      <p class="g-result-snippet">
+        <span class="g-date">Jun 2025 —</span>
+        Digital strategist and GEO specialist. <strong>4+ years</strong> owning global content strategy, editorial governance, and AI-first discoverability across institutional and multi-industry environments. Built the ECB's first GEO framework across <strong>24 EU language markets</strong>. Magna cum laude. Published researcher. Amsterdam-based.
+      </p>
+      <div class="g-sitelinks">
+        <a class="g-sitelink" href="https://714go.github.io/experience/ecb.html" target="_blank">↗ ECB Experience</a>
+        <a class="g-sitelink" href="https://714go.github.io/about.html" target="_blank">↗ About Tiago</a>
+        <a class="g-sitelink" href="https://orcid.org/0009-0004-1927-5925" target="_blank">↗ Publications (ORCID)</a>
+        <a class="g-sitelink" href="https://www.behance.net/tiagodebarros1" target="_blank">↗ Behance Portfolio</a>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 2 — LinkedIn -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">in</div>
+        <div>
+          <div class="g-result-source">LinkedIn</div>
+          <div class="g-result-source-url">linkedin.com › in › barros-tiago-</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://linkedin.com/in/barros-tiago-/" target="_blank">
+        Tiago Barros — Content Strategy & GEO Specialist | LinkedIn
+      </a>
+      <p class="g-result-snippet">
+        SEO and GEO specialist with institutional communications experience across the <strong>European Central Bank</strong>, First Advertising, and freelance practice in Porto. Semrush certified. Ahrefs certified. <strong>Master of Marketing, magna cum laude</strong>. Published in the Encyclopedia of Artificial Intelligence in Marketing (2026).
+      </p>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 3 — ORCID / Research -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-green">R</div>
+        <div>
+          <div class="g-result-source">ORCID Research Profile</div>
+          <div class="g-result-source-url">orcid.org › 0009-0004-1927-5925</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://orcid.org/0009-0004-1927-5925" target="_blank">
+        Tiago de Barros — ORCID | Published Researcher in AI Marketing
+      </a>
+      <p class="g-result-snippet">
+        <strong>Dabić, M., de Barros, T.S., Vlačić, B. (2026).</strong> Marketing Automation: Innovations and Opportunities. Encyclopedia of Artificial Intelligence in Marketing. — <strong>de la Roche, C., de Barros, T., et al. (2022).</strong> Consumer Perceptions of Email and Social Media Marketing. International Review of Management and Marketing, 12(4), 29–37.
+      </p>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- PEOPLE ALSO ASK -->
+    <div class="paa-section">
+      <h2 class="paa-title">People also ask</h2>
+
+      <!-- PAA 1 -->
+      <div class="g-result paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Why does Tiago Barros want this role, and why is he the right fit?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Most content operations optimise for publishing volume rather than discovery authority. What attracts me to Rabobank W&R is the explicit ambition to fix that — content found and trusted by both human audiences and AI systems simultaneously.<br /><br />
+            At the European Central Bank, I built the institution's first GEO framework from scratch across three domains and 24 EU language markets. I then built a custom Looker Studio dashboard integrating LLM citation frequency with traditional traffic metrics — giving senior stakeholders a content investment view based on AI discoverability data for the first time. That is the kind of content infrastructure Rabobank is describing, and it is what I have already built.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — ECB Case Study</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAA 2 -->
+      <div class="g-result paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Can Tiago turn complex insight into distinctive content?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            At the ECB, the insight was uncomfortable: EU youth were the least likely to encounter institutional financial content through any channel the ECB used — yet they were making their first financial decisions in the dark.<br /><br />
+            The concept was EuroSteps — a campaign structured not around institutional messaging but around real financial milestones: first job, first apartment, first savings decision. Each piece was built around an actual search query, not a communications priority. GenAI was used to accelerate research clustering and first-draft structure — every output was then edited heavily and fact-checked against primary ECB sources before publication. The campaign outperformed institutional baseline on both engagement and search visibility.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io" target="_blank">714go.github.io — Portfolio</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAA 3 -->
+      <div class="g-result paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Has Tiago built a scalable content operating model?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            At the ECB, three institutional websites were operating as separate content operations — inconsistent standards, conflicting content, no shared editorial view. The case for change was simple: if three domains are cited together in an AI-generated response about European financial regulation, inconsistency between them erodes the authority of all three.<br /><br />
+            I built a shared editorial governance framework defining what each team could publish independently and what required cross-domain sign-off. I then embedded shared SEO standards, tone of voice guidelines, and structured data requirements into Jira workflows — governance built into production rather than bolted on at the end. Automated reporting via Microsoft Power Automate reduced monitoring overhead by 30%. The result was a unified publishing rhythm, measurably improved cross-domain consistency, and a single analytics view for the first time across three institutional domains.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — ECB Operating Model</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RESULT 4 — Behance -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">Be</div>
+        <div>
+          <div class="g-result-source">Behance</div>
+          <div class="g-result-source-url">behance.net › tiagodebarros1</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.behance.net/tiagodebarros1" target="_blank">
+        Tiago de Barros — Creative & Brand Portfolio | Behance
+      </a>
+      <p class="g-result-snippet">
+        Visual and brand work spanning digital campaigns, editorial design, and institutional communications. Demonstrates the <strong>design thinking and brand sensitivity</strong> that underpins content strategy decisions — not just SEO execution.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ── KNOWLEDGE PANEL ── -->
+  <aside class="g-kp">
+    <div class="g-kp-image">
+      <span class="g-kp-image-initials">TB</span>
+    </div>
+    <div class="g-kp-body">
+      <div class="g-kp-name">Tiago Barros</div>
+      <div class="g-kp-type">Global Content Strategy & GEO Specialist</div>
+      <div class="g-kp-desc">
+        Amsterdam-based digital strategist with 4+ years owning global content operating models, editorial governance, and AI-first discoverability across international institutions. Built the ECB's first GEO framework. Magna cum laude. Published researcher.
+      </div>
+
+      <div class="g-kp-row">
+        <span class="g-kp-label">Location</span>
+        <span class="g-kp-value">Amsterdam, Netherlands</span>
+      </div>
+      <div class="g-kp-row">
+        <span class="g-kp-label">Languages</span>
+        <span class="g-kp-value">English · Portuguese · Dutch (A2)</span>
+      </div>
+      <div class="g-kp-row">
+        <span class="g-kp-label">Education</span>
+        <span class="g-kp-value">MSc Marketing, Wits (magna cum laude)</span>
+      </div>
+      <div class="g-kp-row">
+        <span class="g-kp-label">Research</span>
+        <span class="g-kp-value"><a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID 0009-0004-1927-5925</a></span>
+      </div>
+      <div class="g-kp-row">
+        <span class="g-kp-label">Email</span>
+        <span class="g-kp-value"><a href="mailto:tiagodb3@gmail.com">tiagodb3@gmail.com</a></span>
+      </div>
+      <div class="g-kp-row">
+        <span class="g-kp-label">Phone</span>
+        <span class="g-kp-value">+27 82 902 0238</span>
+      </div>
+
+      <div class="g-kp-socials">
+        <a class="g-kp-social-btn" href="https://714go.github.io" target="_blank">🌐 Portfolio</a>
+        <a class="g-kp-social-btn" href="https://linkedin.com/in/barros-tiago-/" target="_blank">in LinkedIn</a>
+        <a class="g-kp-social-btn" href="https://www.behance.net/tiagodebarros1" target="_blank">Be Behance</a>
+        <a class="g-kp-social-btn" href="https://www.strava.com/athletes/67746291" target="_blank">🏃 Strava</a>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<script>
+function togglePAA(el) {
+  const answer  = el.nextElementSibling;
+  const chevron = el.querySelector('.paa-chevron');
+  const isOpen  = answer.classList.contains('open');
+
+  document.querySelectorAll('.paa-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.paa-chevron').forEach(c => c.classList.remove('open'));
+
+  if (!isOpen) {
+    answer.classList.add('open');
+    chevron.classList.add('open');
+  }
+}
+</script>
+
+</body>
+</html>
