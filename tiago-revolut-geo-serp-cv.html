@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tiago Barros — Revolut Growth Manager, AI-Generated Discovery</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: arial, sans-serif; background: #fff; color: #202124; font-size: 14px; line-height: 1.58; }
+
+  /* ── HEADER ── */
+  .g-header { border-bottom: 1px solid #ebebeb; padding: 16px 0 0; position: sticky; top: 0; background: #fff; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .g-header-inner { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  .g-logo { font-size: 28px; font-weight: 400; letter-spacing: -1px; margin-bottom: 12px; display: inline-block; text-decoration: none; }
+  .g-logo .g-b  { color: #4285F4; }
+  .g-logo .g-r  { color: #EA4335; }
+  .g-logo .g-y  { color: #FBBC05; }
+  .g-logo .g-gb { color: #4285F4; }
+  .g-logo .g-gr { color: #34A853; }
+  .g-logo .g-ge { color: #EA4335; }
+
+  .g-search-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .g-search-box { display: flex; align-items: center; border: 1px solid #dfe1e5; border-radius: 24px; padding: 9px 18px 9px 22px; width: 640px; max-width: 100%; transition: box-shadow .15s; }
+  .g-search-box:hover { box-shadow: 0 1px 8px rgba(32,33,36,.28); border-color: rgba(223,225,229,0); }
+  .g-search-input { flex: 1; border: none; outline: none; font-size: 16px; color: #202124; font-family: arial, sans-serif; background: transparent; }
+  .g-search-icons { color: #9aa0a6; display: flex; gap: 12px; align-items: center; }
+
+  .g-nav { display: flex; font-size: 13px; color: #70757a; border-top: 1px solid #ebebeb; margin-top: 4px; overflow-x: auto; }
+  .g-nav-item { padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 6px; border-bottom: 3px solid transparent; color: #70757a; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .g-nav-item.active { color: #1a73e8; border-bottom-color: #1a73e8; }
+  .g-nav-item:hover { color: #202124; background: #f8f9fa; }
+
+  /* ── BODY ── */
+  .g-body { max-width: 1080px; margin: 0 auto; padding: 24px 24px 80px; display: grid; grid-template-columns: 1fr 340px; gap: 48px; }
+
+  .g-result-count { font-size: 13px; color: #70757a; margin-bottom: 18px; }
+  .g-result-count span { color: #202124; }
+
+  .g-tools { font-size: 13px; color: #70757a; margin-bottom: 22px; display: flex; gap: 20px; flex-wrap: wrap; }
+
+  /* ── FEATURED SNIPPET ── */
+  .g-featured {
+    border: 1px solid #dfe1e5; border-radius: 12px; padding: 20px 24px;
+    margin-bottom: 32px; max-width: 680px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+  }
+  .g-featured-label { font-size: 12px; color: #70757a; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; font-weight: 500; letter-spacing: .3px; }
+  .g-featured-content { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .g-featured-source { display: flex; align-items: center; gap: 10px; font-size: 13px; padding-top: 12px; border-top: 1px solid #ebebeb; }
+  .g-featured-source a { color: #1a0dab; text-decoration: none; font-weight: 500; }
+  .g-featured-source a:hover { text-decoration: underline; }
+
+  /* ── AI OVERVIEW BOX ── */
+  .g-ai-overview {
+    background: linear-gradient(135deg, #EEF2FF 0%, #F0F7FF 100%);
+    border: 1px solid #C7D7FA; border-radius: 12px;
+    padding: 18px 22px; margin-bottom: 32px; max-width: 680px;
+  }
+  .g-ai-label { font-size: 12px; font-weight: 700; color: #1a73e8; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; letter-spacing: .5px; text-transform: uppercase; }
+  .g-ai-label svg { color: #4285F4; }
+  .g-ai-content { font-size: 14px; color: #202124; line-height: 1.7; }
+  .g-ai-content strong { color: #1a0dab; }
+  .g-ai-sources { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .g-ai-source-chip { display: flex; align-items: center; gap: 6px; border: 1px solid #C7D7FA; border-radius: 20px; padding: 4px 12px; font-size: 12px; color: #1a0dab; text-decoration: none; background: #fff; transition: background .15s; }
+  .g-ai-source-chip:hover { background: #EEF2FF; text-decoration: underline; }
+
+  /* ── ORGANIC RESULTS ── */
+  .g-result { margin-bottom: 32px; }
+  .g-result-url-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .g-favicon { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .fav-blue    { background: #4285F4; }
+  .fav-green   { background: #34A853; }
+  .fav-dark    { background: #202124; }
+  .fav-revolut { background: #191C1F; }
+  .fav-gold    { background: #FBBC05; color: #202124; }
+
+  .g-result-source     { font-size: 14px; color: #202124; line-height: 1.4; }
+  .g-result-source-url { font-size: 12px; color: #70757a; }
+
+  .g-result-title { font-size: 20px; font-weight: 400; color: #1a0dab; line-height: 1.3; cursor: pointer; text-decoration: none; display: block; margin-bottom: 5px; }
+  .g-result-title:hover { text-decoration: underline; }
+  .g-result-title:visited { color: #681da8; }
+
+  .g-result-snippet { font-size: 14px; color: #4d5156; line-height: 1.62; max-width: 660px; margin-bottom: 8px; }
+  .g-result-snippet strong { color: #202124; font-weight: 700; }
+  .g-date { font-size: 14px; color: #70757a; margin-right: 4px; }
+
+  .g-result-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: #70757a; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ebebeb; max-width: 660px; }
+  .g-result-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .g-sitelinks { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 28px; margin-top: 12px; max-width: 600px; }
+  .g-sitelink { font-size: 14px; color: #1a0dab; text-decoration: none; display: flex; align-items: center; gap: 4px; padding: 5px 0; border-top: 1px solid #ebebeb; }
+  .g-sitelink:hover { text-decoration: underline; background: #f8f9fa; padding-left: 4px; }
+
+  .g-divider { border: none; border-top: 1px solid #ebebeb; margin: 24px 0; }
+
+  /* ── PEOPLE ALSO ASK ── */
+  .paa-section { margin-bottom: 32px; max-width: 680px; }
+  .paa-title { font-size: 20px; font-weight: 400; color: #202124; margin-bottom: 14px; }
+  .paa-item { border: 1px solid #dfe1e5; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .paa-question { display: flex; justify-content: space-between; align-items: center; padding: 15px 18px; cursor: pointer; font-size: 15px; color: #202124; background: #fff; user-select: none; font-weight: 400; }
+  .paa-question:hover { background: #f8f9fa; }
+  .paa-chevron { flex-shrink: 0; width: 22px; height: 22px; color: #70757a; transition: transform .2s; }
+  .paa-chevron.open { transform: rotate(180deg); }
+  .paa-answer { display: none; border-top: 1px solid #ebebeb; padding: 18px 18px 14px; background: #fafafa; }
+  .paa-answer.open { display: block; }
+  .paa-answer-text { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .paa-answer-text strong { font-weight: 600; }
+  .paa-answer-source { display: flex; align-items: center; gap: 8px; font-size: 13px; padding-top: 10px; border-top: 1px solid #ebebeb; }
+  .paa-answer-source a { color: #1a0dab; text-decoration: none; }
+  .paa-answer-source a:hover { text-decoration: underline; }
+
+  /* ── KNOWLEDGE PANEL ── */
+  .g-kp { border: 1px solid #dfe1e5; border-radius: 12px; overflow: hidden; font-size: 14px; align-self: start; position: sticky; top: 104px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .g-kp-image { width: 100%; height: 220px; background: #e8eaed; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .g-kp-image img { width: 100%; height: 100%; object-fit: cover; }
+  .g-kp-body { padding: 18px; }
+  .g-kp-name { font-size: 24px; font-weight: 400; color: #202124; margin-bottom: 2px; }
+  .g-kp-type { font-size: 14px; color: #70757a; margin-bottom: 14px; }
+  .g-kp-desc { font-size: 13px; color: #4d5156; line-height: 1.6; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #ebebeb; }
+  .g-kp-row { display: flex; gap: 8px; margin-bottom: 9px; font-size: 13px; }
+  .g-kp-label { color: #70757a; min-width: 76px; flex-shrink: 0; font-weight: 500; }
+  .g-kp-value { color: #202124; }
+  .g-kp-value a { color: #1a0dab; text-decoration: none; }
+  .g-kp-value a:hover { text-decoration: underline; }
+  .g-kp-tag { display: inline-block; background: #e8f0fe; color: #1a73e8; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-highlight-tag { display: inline-block; background: #fce8e6; color: #c5221f; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-socials { display: flex; gap: 8px; padding-top: 14px; border-top: 1px solid #ebebeb; margin-top: 10px; flex-wrap: wrap; }
+  .g-kp-social-btn { border: 1px solid #dfe1e5; border-radius: 20px; padding: 7px 14px; font-size: 12px; color: #1a0dab; text-decoration: none; transition: background .15s; font-weight: 500; }
+  .g-kp-social-btn:hover { background: #f8f9fa; text-decoration: underline; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 820px) {
+    .g-body { grid-template-columns: 1fr; }
+    .g-kp { display: none; }
+    .g-search-box { width: 100%; }
+    .g-sitelinks { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="g-header">
+  <div class="g-header-inner">
+    <a class="g-logo" href="#">
+      <span class="g-b">G</span><span class="g-r">o</span><span class="g-y">o</span><span class="g-gb">g</span><span class="g-gr">l</span><span class="g-ge">e</span>
+    </a>
+    <div class="g-search-row">
+      <div class="g-search-box">
+        <input class="g-search-input" type="text" value="Tiago Barros GEO Growth Manager LLM AI-generated discovery Revolut" readonly />
+        <div class="g-search-icons">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+      </div>
+    </div>
+    <nav class="g-nav">
+      <a class="g-nav-item active" href="#">All</a>
+      <a class="g-nav-item" href="https://714go.github.io" target="_blank">Portfolio</a>
+      <a class="g-nav-item" href="https://marketingautomation.lovable.app" target="_blank">✨ Interactive Research</a>
+      <a class="g-nav-item" href="https://linkedin.com/in/barros-tiago-/" target="_blank">LinkedIn</a>
+      <a class="g-nav-item" href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID</a>
+      <a class="g-nav-item" href="https://www.behance.net/tiagodebarros1" target="_blank">Behance</a>
+      <a class="g-nav-item" href="https://www.strava.com/athletes/67746291" target="_blank">Strava</a>
+    </nav>
+  </div>
+</header>
+
+<main class="g-body">
+  <div class="g-main">
+
+    <p class="g-result-count">About <span>7 results</span> (0.38 seconds) for Tiago Barros — Growth Manager, AI-Generated Discovery, Revolut</p>
+
+    <div class="g-tools">
+      <span>🤖 Built ECB's first GEO framework from scratch</span>
+      <span>📚 Published researcher in AI-driven marketing</span>
+      <span>💳 Financial services institutional background</span>
+      <span>✅ Full EU working rights</span>
+    </div>
+
+    <!-- AI OVERVIEW -->
+    <div class="g-ai-overview">
+      <div class="g-ai-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+        AI Overview
+      </div>
+      <div class="g-ai-content">
+        Tiago Barros is one of a small number of practitioners who has built a <strong>Generative Engine Optimisation (GEO) strategy from scratch</strong> at institutional scale, deployed it across 24 official EU languages at the European Central Bank, and then <strong>published peer-reviewed academic research on the methodology</strong>. He monitors brand citation across ChatGPT, Perplexity, and Google AI Overviews as part of his daily workflow. He is the candidate in this application pool most likely to already understand the difference between how Revolut appears in a Google search result versus how it appears in an LLM-generated response about fintech products, and why that gap matters.
+      </div>
+      <div class="g-ai-sources">
+        <a class="g-ai-source-chip" href="https://714go.github.io/experience/ecb.html" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#4285F4;flex-shrink:0;"></span>
+          714go.github.io — ECB GEO Build
+        </a>
+        <a class="g-ai-source-chip" href="https://orcid.org/0009-0004-1927-5925" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#34A853;flex-shrink:0;"></span>
+          ORCID — Published Research
+        </a>
+        <a class="g-ai-source-chip" href="https://marketingautomation.lovable.app" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#FBBC05;flex-shrink:0;"></span>
+          Interactive Research Site
+        </a>
+      </div>
+    </div>
+
+    <!-- FEATURED SNIPPET -->
+    <div class="g-featured">
+      <div class="g-featured-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#70757a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Featured result
+      </div>
+      <div class="g-featured-content">
+        Tiago Barros is a GEO and growth specialist with 6+ years owning generative search strategy, LLM visibility optimisation, brand accuracy in AI-generated responses, and content structuring for both traditional and AI-driven discovery. He built the European Central Bank's first GEO framework from scratch with no existing playbook, deployed it across three institutional domains, published the methodology academically, and then rebuilt that same paper as an interactive web experience using AI-assisted vibe coding. He uses Claude, ChatGPT, and Perplexity daily as working tools, not research objects.
+      </div>
+      <div class="g-featured-source">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div style="font-size:13px;color:#202124;">714go.github.io</div>
+          <a href="https://714go.github.io" target="_blank">714go.github.io — Full Portfolio & GEO Case Study →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT 1 -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Digital Portfolio</div>
+          <div class="g-result-source-url">714go.github.io</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io" target="_blank">Tiago Barros — GEO Growth Manager & AI-Generated Discovery Specialist</a>
+      <p class="g-result-snippet">
+        <span class="g-date">Updated 2025 —</span>
+        6+ years owning generative search strategy, LLM brand visibility, structured data, and organic growth across classical SEO and AI-driven discovery platforms. Built the ECB's first GEO framework from scratch across <strong>three institutional domains and 24 EU languages</strong>. Published academic researcher in AI-driven marketing. Monitors brand citation across ChatGPT, Perplexity, Gemini, and Google AI Overviews daily as a working practice.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io</span>
+        <span>📅 Last updated 2025</span>
+        <span>🏷 GEO · LLM Visibility · Brand Accuracy · AI Discovery</span>
+      </div>
+      <div class="g-sitelinks">
+        <a class="g-sitelink" href="https://714go.github.io/experience/ecb.html" target="_blank">↗ ECB GEO Build — Case Study</a>
+        <a class="g-sitelink" href="https://714go.github.io/about.html" target="_blank">↗ About Tiago</a>
+        <a class="g-sitelink" href="https://orcid.org/0009-0004-1927-5925" target="_blank">↗ Published Research</a>
+        <a class="g-sitelink" href="https://marketingautomation.lovable.app" target="_blank">↗ Interactive Research Site</a>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 2 - ECB -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Institutional GEO Case Study</div>
+          <div class="g-result-source-url">714go.github.io › experience › ecb</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io/experience/ecb.html" target="_blank">European Central Bank — GEO Strategy Built From Scratch, Frankfurt | First in ECB History</a>
+      <p class="g-result-snippet">
+        Owned and delivered the ECB's first generative search strategy across three institutional domains and 24 official EU languages with no existing playbook. Implemented structured data, entity optimisation, semantic content architecture, and LLM citation frameworks. Measured brand visibility across AI search and LLM platforms. Tracked downstream performance impact and used insights to drive optimisation actions. Managed content distribution across owned channels to support organic and AI-driven discovery simultaneously.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io/experience/ecb.html</span>
+        <span>📅 Role period ending 07/2024</span>
+        <span>🏷 GEO Build From Scratch · 24 EU Languages · LLM Citation · Brand Accuracy</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 3 - Interactive research -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-gold">L</div>
+        <div>
+          <div class="g-result-source">Lovable — AI-Assisted Interactive Build</div>
+          <div class="g-result-source-url">marketingautomation.lovable.app</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://marketingautomation.lovable.app" target="_blank">Marketing Automation: Next Steps & Future Avenues — Published Paper, Interactive</a>
+      <p class="g-result-snippet">
+        Tiago's peer-reviewed academic paper on marketing automation, rebuilt as an interactive, gamified web experience using AI-assisted vibe coding. The existence of this build says more than the paper itself does: he didn't just write about what AI can do for content and growth, he built something with it, shipped it, and made it publicly available. That is the mindset Revolut is describing when they say they want someone who enjoys working with data, is naturally curious, and has a will to make an impact.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 marketingautomation.lovable.app</span>
+        <span>📅 Published 2026 (source paper) — interactive build 2025</span>
+        <span>🏷 AI Marketing Research · Vibe Coding · Built & Shipped</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- PEOPLE ALSO ASK -->
+    <div class="paa-section">
+      <h2 class="paa-title">People also ask</h2>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>What does it actually mean that Tiago "built the ECB's first GEO framework from scratch"?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            It means there was no brief, no precedent, no team, no playbook, and no one to escalate to. When Tiago started at the ECB, the institution had no strategy for how its content appeared in AI-generated responses at all. He identified the problem before it was on anyone's agenda, built the case that it mattered, designed the framework, implemented structured data and entity optimisation across three institutional domains and 24 languages, monitored how ECB content was being cited and framed across ChatGPT, Gemini, and Perplexity, and then iterated based on what he observed. He then published the analytical methodology as academic research because the questions it raised were worth documenting properly. That is what "from scratch" means here. Not a gap in an existing strategy. An entirely new discipline, built from zero.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — ECB GEO Build</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>How does Tiago measure brand visibility and accuracy in LLM-generated responses?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            By querying. He uses Claude, ChatGPT, Perplexity, and Gemini daily, running systematic prompts that surface how a brand or institution is described, cited, framed, and positioned in AI-generated answers. He tracks citation frequency, whether the content cited is accurate or hallucinated, the sentiment and framing of how the brand appears, and how that changes when the underlying content or structured data is updated. At the ECB, this monitoring practice directly informed which content needed restructuring, which entities needed disambiguation, and which topics needed stronger semantic signals before they would reliably surface accurately in LLM responses. This is the measurement practice Revolut is describing when they say they want someone to measure visibility across AI search and LLM platforms and track downstream performance impact.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-green" style="width:14px;height:14px;font-size:9px;">R</div>
+            <a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID — Published Research, AI-Driven Marketing</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Does Tiago have the financial services background to credibly work inside Revolut?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes, at a depth that most digital growth candidates won't have. The European Central Bank sets monetary policy, supervises eurozone banks, and manages systemic financial risk for 24 EU member states. Understanding how to communicate financial products, regulate accurate financial messaging, and build digital presence for an institution that cannot afford reputational error is a different level of financial services credibility than most fintech growth backgrounds. Revolut's challenge, improving brand visibility, accuracy, and sentiment in AI-generated financial content, is especially relevant coming from an institutional background where accuracy in AI-generated responses is not a brand preference but a regulatory concern.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — Financial Services Context</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Can Tiago break complex problems into smaller ones and own them end to end?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            The ECB GEO build answers this directly. The problem was: an institution that millions of people query across AI systems has no strategy for what those systems say about it. That is a complex, novel, cross-functional challenge with no precedent. He broke it into entity disambiguation, structured data, semantic content optimisation, LLM citation monitoring, and performance measurement, defined owners and timelines for each workstream, built the measurement infrastructure from scratch, and drove delivery through editorial, IT, and development teams who had no prior context for what GEO meant. The fact that he then published the methodology is evidence of someone who doesn't just solve a problem, they document it so it can be understood and replicated.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io" target="_blank">714go.github.io — Full Portfolio</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>What makes Tiago different from other GEO candidates applying for this role?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Most candidates applying for a GEO role will have read about it recently. Some will have run small experiments. A smaller number will have owned a GEO programme at scale. Tiago is in the subset who has done all three and then published peer-reviewed research on the methodology. That combination, practitioner depth plus academic rigour plus a publicly available demonstration of AI-augmented execution, is not replicable through time spent on other candidates' CVs. The interactive research site at marketingautomation.lovable.app is the clearest signal: he did not just write a paper about AI-driven marketing. He used AI to rebuild the paper itself into a working product. That is the action-oriented, AI-native mindset Revolut is describing as essential for this role.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-gold" style="width:14px;height:14px;font-size:9px;">L</div>
+            <a href="https://marketingautomation.lovable.app" target="_blank">marketingautomation.lovable.app</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 4 - ORCID -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-green">R</div>
+        <div>
+          <div class="g-result-source">ORCID Research Profile</div>
+          <div class="g-result-source-url">orcid.org › 0009-0004-1927-5925</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://orcid.org/0009-0004-1927-5925" target="_blank">Tiago de Barros — ORCID | Published Research in AI-Driven Marketing</a>
+      <p class="g-result-snippet">
+        <strong>Dabić, M., de Barros, T.S., Vlačić, B. (2026).</strong> Marketing Automation: Innovations and Opportunities. Encyclopedia of Artificial Intelligence in Marketing. The research that preceded and documented the GEO framework built at the ECB.
+        <strong>de la Roche, C., de Barros, T., et al. (2022).</strong> Consumer Perceptions of Email and Social Media Marketing. International Review of Management and Marketing, 12(4), 29–37.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 orcid.org/0009-0004-1927-5925</span>
+        <span>📅 2022, 2026</span>
+        <span>🏷 Peer-reviewed · AI in Marketing · GEO Methodology</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 5 - LinkedIn -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">in</div>
+        <div>
+          <div class="g-result-source">LinkedIn</div>
+          <div class="g-result-source-url">linkedin.com › in › barros-tiago-</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://linkedin.com/in/barros-tiago-/" target="_blank">Tiago Barros — GEO & Growth Manager, AI-Generated Discovery | LinkedIn</a>
+      <p class="g-result-snippet">
+        6+ years across GEO, SEO, and AI-driven growth strategy. ECB institutional alumni across 24 EU languages. Semrush Technical SEO and AI Search Essentials certified. Ahrefs certified. Published in the Encyclopedia of Artificial Intelligence in Marketing (2026). Master of Marketing, magna cum laude, Católica Porto Business School. English C1+; Portuguese B2; Dutch actively developing.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 linkedin.com/in/barros-tiago-</span>
+        <span>📅 Profile active</span>
+        <span>🏷 Connections · Certifications · Publications</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 6 - Behance -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">Be</div>
+        <div>
+          <div class="g-result-source">Behance</div>
+          <div class="g-result-source-url">behance.net › tiagodebarros1</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.behance.net/tiagodebarros1" target="_blank">Tiago de Barros — Design & Visual Portfolio | Behance</a>
+      <p class="g-result-snippet">
+        Visual communication and editorial design work demonstrating the structural sensibility behind brand presentation, content architecture, and visual identity. Relevant because brand accuracy in AI-generated responses is partly a content quality problem and partly a brand consistency problem, and Tiago brings sensibility for both.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 behance.net/tiagodebarros1</span>
+        <span>📅 Portfolio active</span>
+        <span>🏷 Brand Design · Editorial · Visual Identity</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 7 - Strava -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon" style="background:#FC4C02;">S</div>
+        <div>
+          <div class="g-result-source">Strava</div>
+          <div class="g-result-source-url">strava.com › athletes › 67746291</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.strava.com/athletes/67746291" target="_blank">Tiago Barros — Strava | Runner</a>
+      <p class="g-result-snippet">
+        Because Revolut says they want people who are energised by the opportunity to build foundational growth infrastructure and shape what's next in finance. That kind of sustained commitment requires a certain kind of person. Someone who shows up consistently, tracks their own performance, and genuinely enjoys the process of getting better over time.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 strava.com/athletes/67746291</span>
+        <span>📅 Active</span>
+        <span>🏷 Running · Consistency · Personal Metrics</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KNOWLEDGE PANEL -->
+  <aside class="g-kp">
+    <div class="g-kp-image">
+      <img src="data:image/jpeg;base64,PHOTO_BASE64_PLACEHOLDER" alt="Tiago Barros" />
+    </div>
+    <div class="g-kp-body">
+      <div class="g-kp-name">Tiago Barros</div>
+      <div class="g-kp-type">GEO Growth Manager & AI-Discovery Specialist</div>
+      <div class="g-kp-desc">
+        Built the ECB's first GEO framework from scratch across 24 EU languages. Published academic researcher in AI-driven marketing. Rebuilt his own paper as a vibe-coded interactive site. Monitors LLM brand citation daily.
+      </div>
+      <div class="g-kp-row"><span class="g-kp-label">Signature</span><span class="g-kp-value"><span class="g-kp-highlight-tag">ECB GEO — First ever</span></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Research</span><span class="g-kp-value"><a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID 0009-0004-1927-5925</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Rights</span><span class="g-kp-value">Full EU working rights</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Languages</span><span class="g-kp-value">English (C1+) · Portuguese (B2) · Dutch (A2, developing)</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Education</span><span class="g-kp-value">MSc Marketing, magna cum laude (Masters) — Católica Porto Business School</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Also</span><span class="g-kp-value">BCom Honours, Business Sciences/Marketing — University of the Witwatersrand</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Email</span><span class="g-kp-value"><a href="mailto:tiagodb3@gmail.com">tiagodb3@gmail.com</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Certs</span><span class="g-kp-value">
+        <span class="g-kp-tag">Semrush AI Search</span>
+        <span class="g-kp-tag">Ahrefs</span>
+        <span class="g-kp-tag">GA4</span>
+        <span class="g-kp-tag">DMI</span>
+        <span class="g-kp-tag">HubSpot</span>
+      </span></div>
+      <div class="g-kp-socials">
+        <a class="g-kp-social-btn" href="https://714go.github.io" target="_blank">🌐 Portfolio</a>
+        <a class="g-kp-social-btn" href="https://marketingautomation.lovable.app" target="_blank">✨ Research</a>
+        <a class="g-kp-social-btn" href="https://linkedin.com/in/barros-tiago-/" target="_blank">in LinkedIn</a>
+        <a class="g-kp-social-btn" href="https://orcid.org/0009-0004-1927-5925" target="_blank">◎ ORCID</a>
+        <a class="g-kp-social-btn" href="https://www.behance.net/tiagodebarros1" target="_blank">Be Behance</a>
+        <a class="g-kp-social-btn" href="https://www.strava.com/athletes/67746291" target="_blank">🏃 Strava</a>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<script>
+function togglePAA(el) {
+  const answer = el.nextElementSibling;
+  const chevron = el.querySelector('.paa-chevron');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.paa-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.paa-chevron').forEach(c => c.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('open'); chevron.classList.add('open'); }
+}
+</script>
+</body>
+</html>
