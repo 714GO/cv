@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tiago Barros — VML Luxembourg English Content Specialist</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: arial, sans-serif; background: #fff; color: #202124; font-size: 14px; line-height: 1.58; }
+
+  /* ── HEADER ── */
+  .g-header { border-bottom: 1px solid #ebebeb; padding: 16px 0 0; position: sticky; top: 0; background: #fff; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+  .g-header-inner { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  .g-logo { font-size: 28px; font-weight: 400; letter-spacing: -1px; margin-bottom: 12px; display: inline-block; text-decoration: none; }
+  .g-logo .g-b { color: #4285F4; } .g-logo .g-r { color: #EA4335; }
+  .g-logo .g-y { color: #FBBC05; } .g-logo .g-gb { color: #4285F4; }
+  .g-logo .g-gr { color: #34A853; } .g-logo .g-ge { color: #EA4335; }
+
+  .g-search-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .g-search-box { display: flex; align-items: center; border: 1px solid #dfe1e5; border-radius: 24px; padding: 9px 18px 9px 22px; width: 660px; max-width: 100%; transition: box-shadow .15s; }
+  .g-search-box:hover { box-shadow: 0 1px 8px rgba(32,33,36,.28); border-color: rgba(223,225,229,0); }
+  .g-search-input { flex: 1; border: none; outline: none; font-size: 16px; color: #202124; font-family: arial, sans-serif; background: transparent; }
+  .g-search-icons { color: #9aa0a6; }
+
+  .g-nav { display: flex; font-size: 13px; color: #70757a; border-top: 1px solid #ebebeb; margin-top: 4px; overflow-x: auto; }
+  .g-nav-item { padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 6px; border-bottom: 3px solid transparent; color: #70757a; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .g-nav-item.active { color: #1a73e8; border-bottom-color: #1a73e8; }
+  .g-nav-item:hover { color: #202124; background: #f8f9fa; }
+
+  /* ── BODY ── */
+  .g-body { max-width: 1080px; margin: 0 auto; padding: 24px 24px 80px; display: grid; grid-template-columns: 1fr 340px; gap: 48px; }
+
+  .g-result-count { font-size: 13px; color: #70757a; margin-bottom: 18px; }
+  .g-result-count span { color: #202124; }
+  .g-tools { font-size: 13px; color: #70757a; margin-bottom: 22px; display: flex; gap: 18px; flex-wrap: wrap; }
+
+  /* AI OVERVIEW */
+  .g-ai-overview { background: linear-gradient(135deg, #EEF2FF 0%, #F0F7FF 100%); border: 1px solid #C7D7FA; border-radius: 12px; padding: 18px 22px; margin-bottom: 30px; max-width: 680px; }
+  .g-ai-label { font-size: 12px; font-weight: 700; color: #1a73e8; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; letter-spacing: .5px; text-transform: uppercase; }
+  .g-ai-content { font-size: 14px; color: #202124; line-height: 1.72; }
+  .g-ai-content strong { color: #1a0dab; }
+  .g-ai-sources { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .g-ai-source-chip { display: flex; align-items: center; gap: 6px; border: 1px solid #C7D7FA; border-radius: 20px; padding: 4px 12px; font-size: 12px; color: #1a0dab; text-decoration: none; background: #fff; transition: background .15s; }
+  .g-ai-source-chip:hover { background: #EEF2FF; text-decoration: underline; }
+
+  /* FEATURED */
+  .g-featured { border: 1px solid #dfe1e5; border-radius: 12px; padding: 20px 24px; margin-bottom: 30px; max-width: 680px; background: linear-gradient(135deg, #fafbff 0%, #fff 100%); }
+  .g-featured-label { font-size: 12px; color: #70757a; margin-bottom: 10px; display: flex; align-items: center; gap: 4px; font-weight: 500; }
+  .g-featured-content { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .g-featured-source { display: flex; align-items: center; gap: 10px; font-size: 13px; padding-top: 12px; border-top: 1px solid #ebebeb; }
+  .g-featured-source a { color: #1a0dab; text-decoration: none; font-weight: 500; }
+  .g-featured-source a:hover { text-decoration: underline; }
+
+  /* RESULTS */
+  .g-result { margin-bottom: 32px; }
+  .g-result-url-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .g-favicon { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .fav-blue  { background: #4285F4; }
+  .fav-green { background: #34A853; }
+  .fav-dark  { background: #202124; }
+  .fav-wpp   { background: #000000; }
+  .fav-pt    { background: #006600; }
+
+  .g-result-source { font-size: 14px; color: #202124; line-height: 1.4; }
+  .g-result-source-url { font-size: 12px; color: #70757a; }
+
+  .g-result-title { font-size: 20px; font-weight: 400; color: #1a0dab; line-height: 1.3; cursor: pointer; text-decoration: none; display: block; margin-bottom: 5px; }
+  .g-result-title:hover { text-decoration: underline; }
+  .g-result-title:visited { color: #681da8; }
+
+  .g-result-snippet { font-size: 14px; color: #4d5156; line-height: 1.62; max-width: 660px; margin-bottom: 8px; }
+  .g-result-snippet strong { color: #202124; font-weight: 700; }
+  .g-date { font-size: 14px; color: #70757a; margin-right: 4px; }
+
+  .g-result-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: #70757a; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ebebeb; max-width: 660px; }
+  .g-result-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .g-sitelinks { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 28px; margin-top: 12px; max-width: 600px; }
+  .g-sitelink { font-size: 14px; color: #1a0dab; text-decoration: none; display: flex; align-items: center; gap: 4px; padding: 5px 0; border-top: 1px solid #ebebeb; }
+  .g-sitelink:hover { text-decoration: underline; background: #f8f9fa; padding-left: 4px; }
+
+  /* CITIZENSHIP CALLOUT */
+  .g-citizen-box { border: 1px solid #c8e6c9; background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%); border-radius: 10px; padding: 14px 18px; margin-bottom: 28px; max-width: 680px; }
+  .g-citizen-label { font-size: 12px; font-weight: 700; color: #2e7d32; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .g-citizen-text { font-size: 13px; color: #1b5e20; line-height: 1.65; }
+
+  .g-divider { border: none; border-top: 1px solid #ebebeb; margin: 24px 0; }
+
+  /* PAA */
+  .paa-section { margin-bottom: 32px; max-width: 680px; }
+  .paa-title { font-size: 20px; font-weight: 400; color: #202124; margin-bottom: 14px; }
+  .paa-item { border: 1px solid #dfe1e5; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .paa-question { display: flex; justify-content: space-between; align-items: center; padding: 15px 18px; cursor: pointer; font-size: 15px; color: #202124; background: #fff; user-select: none; }
+  .paa-question:hover { background: #f8f9fa; }
+  .paa-chevron { flex-shrink: 0; width: 22px; height: 22px; color: #70757a; transition: transform .2s; }
+  .paa-chevron.open { transform: rotate(180deg); }
+  .paa-answer { display: none; border-top: 1px solid #ebebeb; padding: 18px; background: #fafafa; }
+  .paa-answer.open { display: block; }
+  .paa-answer-text { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .paa-answer-source { display: flex; align-items: center; gap: 8px; font-size: 13px; padding-top: 10px; border-top: 1px solid #ebebeb; }
+  .paa-answer-source a { color: #1a0dab; text-decoration: none; }
+  .paa-answer-source a:hover { text-decoration: underline; }
+
+  /* KNOWLEDGE PANEL */
+  .g-kp { border: 1px solid #dfe1e5; border-radius: 12px; overflow: hidden; font-size: 14px; align-self: start; position: sticky; top: 104px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .g-kp-image { width: 100%; height: 220px; background: #e8eaed; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .g-kp-image img { width: 100%; height: 100%; object-fit: cover; }
+  .g-kp-body { padding: 18px; }
+  .g-kp-name { font-size: 24px; font-weight: 400; color: #202124; margin-bottom: 2px; }
+  .g-kp-type { font-size: 14px; color: #70757a; margin-bottom: 14px; }
+  .g-kp-desc { font-size: 13px; color: #4d5156; line-height: 1.6; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #ebebeb; }
+  .g-kp-row { display: flex; gap: 8px; margin-bottom: 9px; font-size: 13px; }
+  .g-kp-label { color: #70757a; min-width: 80px; flex-shrink: 0; font-weight: 500; }
+  .g-kp-value { color: #202124; }
+  .g-kp-value a { color: #1a0dab; text-decoration: none; }
+  .g-kp-value a:hover { text-decoration: underline; }
+  .g-kp-tag { display: inline-block; background: #e8f0fe; color: #1a73e8; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-green-tag { display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-socials { display: flex; gap: 8px; padding-top: 14px; border-top: 1px solid #ebebeb; margin-top: 10px; flex-wrap: wrap; }
+  .g-kp-social-btn { border: 1px solid #dfe1e5; border-radius: 20px; padding: 7px 14px; font-size: 12px; color: #1a0dab; text-decoration: none; transition: background .15s; font-weight: 500; }
+  .g-kp-social-btn:hover { background: #f8f9fa; text-decoration: underline; }
+
+  @media (max-width: 820px) {
+    .g-body { grid-template-columns: 1fr; }
+    .g-kp { display: none; }
+    .g-search-box { width: 100%; }
+    .g-sitelinks { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="g-header">
+  <div class="g-header-inner">
+    <a class="g-logo" href="#">
+      <span class="g-b">G</span><span class="g-r">o</span><span class="g-y">o</span><span class="g-gb">g</span><span class="g-gr">l</span><span class="g-ge">e</span>
+    </a>
+    <div class="g-search-row">
+      <div class="g-search-box">
+        <input class="g-search-input" type="text" value="Tiago Barros English Content Specialist SEO GEO VML WPP Luxembourg Amazon" readonly />
+        <div class="g-search-icons">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+      </div>
+    </div>
+    <nav class="g-nav">
+      <a class="g-nav-item active" href="#">All</a>
+      <a class="g-nav-item" href="https://714go.github.io" target="_blank">Portfolio</a>
+      <a class="g-nav-item" href="https://marketingautomation.lovable.app" target="_blank">✨ Interactive Research</a>
+      <a class="g-nav-item" href="https://linkedin.com/in/barros-tiago-/" target="_blank">LinkedIn</a>
+      <a class="g-nav-item" href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID</a>
+      <a class="g-nav-item" href="https://www.behance.net/tiagodebarros1" target="_blank">Behance</a>
+      <a class="g-nav-item" href="https://www.strava.com/athletes/67746291" target="_blank">Strava</a>
+    </nav>
+  </div>
+</header>
+
+<main class="g-body">
+  <div class="g-main">
+
+    <p class="g-result-count">About <span>7 results</span> (0.31 seconds) for Tiago Barros — English Content Specialist, VML Luxembourg</p>
+
+    <div class="g-tools">
+      <span>🇵🇹 Portuguese citizen — EU work permit confirmed</span>
+      <span>🌍 Multilingual content across 24 EU languages</span>
+      <span>🤖 GEO & AI-search content practitioner</span>
+      <span>📚 Published researcher — AI-driven marketing</span>
+    </div>
+
+    <!-- AI OVERVIEW -->
+    <div class="g-ai-overview">
+      <div class="g-ai-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        AI Overview
+      </div>
+      <div class="g-ai-content">
+        Tiago Barros is a <strong>native English content specialist and GEO practitioner</strong> with 6+ years writing, editing, and optimising content for institutional and commercial audiences across multiple product categories and digital channels. He is a <strong>Portuguese citizen</strong> with full EU work permit — no sponsorship required for Luxembourg. He holds published academic research in AI-driven marketing and built the European Central Bank's first GEO framework from scratch, making him one of a small number of content specialists who can genuinely integrate SEO and GEO best practices into product content rather than treating them as separate functions. His multilingual institutional work across 24 official EU languages makes him immediately credible in VML's multilingual Amazon content environment.
+      </div>
+      <div class="g-ai-sources">
+        <a class="g-ai-source-chip" href="https://714go.github.io" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#4285F4;flex-shrink:0;"></span>
+          714go.github.io — Portfolio
+        </a>
+        <a class="g-ai-source-chip" href="https://orcid.org/0009-0004-1927-5925" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#34A853;flex-shrink:0;"></span>
+          ORCID — Published Research
+        </a>
+        <a class="g-ai-source-chip" href="https://marketingautomation.lovable.app" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#FBBC05;flex-shrink:0;"></span>
+          Interactive Research Site
+        </a>
+      </div>
+    </div>
+
+    <!-- CITIZENSHIP CALLOUT -->
+    <div class="g-citizen-box">
+      <div class="g-citizen-label">
+        🇵🇹 EU Work Permit — Confirmed
+      </div>
+      <div class="g-citizen-text">
+        Tiago holds Portuguese citizenship and therefore full, unrestricted EU working rights. No visa sponsorship is required. He can begin work in Luxembourg immediately, without bureaucratic delay or immigration process. For a role that explicitly lists EU work permit as a requirement, this removes one of the most common blockers from the application process before it has begun.
+      </div>
+    </div>
+
+    <!-- FEATURED SNIPPET -->
+    <div class="g-featured">
+      <div class="g-featured-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#70757a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Featured result
+      </div>
+      <div class="g-featured-content">
+        Tiago Barros is a native English content specialist with 6+ years writing compelling, SEO and GEO-optimised content for diverse audiences, product categories, and channels. He integrates search best practices into every piece of content rather than applying them as an afterthought. He has produced content across economics, financial regulation, sustainability, technology, and infrastructure for the European Central Bank — topics as varied in register and audience as cosmetics, sports, clothing, electronics, and furniture. He has coordinated within international teams across 24 EU languages and worked directly with clients to translate product data, images, and briefs into engaging, conversion-focused content.
+      </div>
+      <div class="g-featured-source">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div style="font-size:13px;color:#202124;">714go.github.io</div>
+          <a href="https://714go.github.io" target="_blank">714go.github.io — Full Portfolio & Writing Samples →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT 1 -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Digital Portfolio</div>
+          <div class="g-result-source-url">714go.github.io</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io" target="_blank">Tiago Barros — English Content Specialist, SEO & GEO | Native English | EU Citizen</a>
+      <p class="g-result-snippet">
+        <span class="g-date">Updated 2025 —</span>
+        Native English content specialist with 6+ years writing, editing, and optimising content for institutional and commercial audiences across multiple channels and product categories. Integration of <strong>SEO and GEO best practices</strong> into all content as standard practice. Multilingual coordination across <strong>24 official EU language markets</strong>. Published academic researcher in AI-driven marketing. Portuguese citizen — full EU work permit.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io</span>
+        <span>📅 Last updated 2025</span>
+        <span>🏷 Native English · Content Strategy · SEO · GEO · Multilingual</span>
+      </div>
+      <div class="g-sitelinks">
+        <a class="g-sitelink" href="https://714go.github.io/experience/ecb.html" target="_blank">↗ ECB Content & GEO Case Study</a>
+        <a class="g-sitelink" href="https://714go.github.io/about.html" target="_blank">↗ About Tiago</a>
+        <a class="g-sitelink" href="https://orcid.org/0009-0004-1927-5925" target="_blank">↗ Published Research</a>
+        <a class="g-sitelink" href="https://marketingautomation.lovable.app" target="_blank">↗ Interactive Research Site</a>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 2 - ECB -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Case Study</div>
+          <div class="g-result-source-url">714go.github.io › experience › ecb</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io/experience/ecb.html" target="_blank">European Central Bank — Content Creation, SEO/GEO Integration & Multilingual Coordination</a>
+      <p class="g-result-snippet">
+        Designed content strategies ensuring relevance, consistency, and performance across institutional domains and 24 EU languages. Created compelling, informative content across diverse subject categories based on client briefs, product data, and institutional guidelines. Integrated SEO and GEO best practices into all content as standard, not as an add-on. Coordinated and cooperated within an international team and with international stakeholders. Continuously monitored and updated content to maintain quality and search performance.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io/experience/ecb.html</span>
+        <span>📅 Role period ending 07/2024</span>
+        <span>🏷 Content Strategy · SEO/GEO Integration · 24 EU Languages · Quality Assurance</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 3 - Interactive research -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-green">L</div>
+        <div>
+          <div class="g-result-source">Lovable — Interactive Research Build</div>
+          <div class="g-result-source-url">marketingautomation.lovable.app</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://marketingautomation.lovable.app" target="_blank">Marketing Automation: Innovations & Opportunities — Interactive Thesis</a>
+      <p class="g-result-snippet">
+        Tiago's published academic paper, rebuilt as an interactive gamified web experience using AI-assisted vibe coding. The existence of this build is a direct demonstration of the GEO and AI-search content integration VML is asking for — structuring content so that it performs across AI-powered search platforms, not just traditional search engines. Not a theory. A working product.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 marketingautomation.lovable.app</span>
+        <span>📅 Published 2026 (source paper) — interactive build 2025</span>
+        <span>🏷 GEO · AI Content Strategy · Built & Shipped</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- PEOPLE ALSO ASK -->
+    <div class="paa-section">
+      <h2 class="paa-title">People also ask</h2>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Is Tiago's English genuinely native, not just advanced?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes. English is Tiago's primary working language and has been throughout his entire professional and academic career — at the European Central Bank, at First Advertising in Johannesburg, across his published academic research, and in every client relationship he has managed. His Master of Marketing at the University of the Witwatersrand was conducted entirely in English. His publications are in English. He has never worked in a language other than English as his primary operational language. The Portuguese he holds as a second language at B2 level and continues to develop. Native English is not a claimed standard for this application — it is simply an accurate description of how he has operated his entire life.
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Can Tiago write compelling product descriptions that drive conversion, not just informational content?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes. At the ECB and across his agency work, Tiago has consistently written content with a defined conversion goal — whether that was driving a citizen to complete an action, a professional to engage with institutional research, or a client's customer to move further down a purchase funnel. The same instincts that make institutional content effective, clarity of benefit, structure that reduces friction, and language calibrated to the reader's knowledge level, are the instincts that make product descriptions convert on Amazon. He understands that "informative" and "compelling" are not in tension, they are the same task solved well.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io" target="_blank">714go.github.io — Content Portfolio</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>How does Tiago integrate GEO and SEO into content, rather than treating them as separate steps?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            At the ECB he built a GEO framework that was embedded into the content production process from brief stage, not applied as a final-stage audit. This meant considering entity clarity, semantic structure, FAQ format, and structured data at the point of writing rather than retrofitting optimisation onto finished content. He developed governance documentation and editorial guidelines that baked SEO and GEO requirements into the production workflow so that every writer in the team was producing search-ready content by default. For VML's Amazon content environment, this means product descriptions that are structured for both human buyers and AI-powered search surfaces from the first draft — not after a separate review cycle.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-green" style="width:14px;height:14px;font-size:9px;">R</div>
+            <a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID — Published Research, GEO Methodology</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Can Tiago write across diverse product categories — cosmetics, sports, electronics, furniture — not just one vertical?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes, and this is precisely the kind of versatility his career has required. At the ECB he wrote across monetary policy, banking supervision, financial stability, economic research, and regulatory communications — topics as varied in register, vocabulary, and audience as any product category portfolio VML manages. His freelance years in Porto covered clients across genuinely diverse industries. At First Advertising he manages a multi-industry portfolio simultaneously. Adapting tone, vocabulary, and structural approach to a new product category is not a learning curve for him — it is a habit built across six years of doing it constantly.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io" target="_blank">714go.github.io — Multi-Category Content</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Why does Tiago want this role specifically — is this a genuine fit or just another application?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Luxembourg is not a destination Tiago is moving toward by accident. He is a Portuguese citizen who has worked across Portugal, Germany, and South Africa and is actively relocating to mainland Europe. A WPP agency role in Luxembourg, where his EU citizenship removes all barriers to employment, where the work combines native English content with multilingual coordination across European markets, and where SEO and GEO are explicitly part of the brief rather than an afterthought — this is not a role he is applying to because it came up in a search. It is the intersection of what he does well, what he wants to do next, and where he wants to do it.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 4 - ORCID -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-green">R</div>
+        <div>
+          <div class="g-result-source">ORCID Research Profile</div>
+          <div class="g-result-source-url">orcid.org › 0009-0004-1927-5925</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://orcid.org/0009-0004-1927-5925" target="_blank">Tiago de Barros — Published Research, AI-Driven Marketing & GEO Content Strategy</a>
+      <p class="g-result-snippet">
+        <strong>Dabić, M., de Barros, T.S., Vlačić, B. (2026).</strong> Marketing Automation: Innovations and Opportunities. Encyclopedia of Artificial Intelligence in Marketing. The academic foundation behind his GEO content methodology — peer-reviewed and published, not just claimed.
+        <strong>de la Roche, C., de Barros, T., et al. (2022).</strong> Consumer Perceptions of Email and Social Media Marketing. International Review of Management and Marketing, 12(4), 29–37.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 orcid.org/0009-0004-1927-5925</span>
+        <span>📅 2022, 2026</span>
+        <span>🏷 Peer-reviewed · AI Marketing · GEO Methodology</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 5 - LinkedIn -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">in</div>
+        <div>
+          <div class="g-result-source">LinkedIn</div>
+          <div class="g-result-source-url">linkedin.com › in › barros-tiago-</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://linkedin.com/in/barros-tiago-/" target="_blank">Tiago Barros — Native English Content Specialist & GEO Practitioner | LinkedIn</a>
+      <p class="g-result-snippet">
+        6+ years writing, editing, and optimising content across institutional and commercial environments. ECB alumni across 24 official EU languages. Semrush and Ahrefs certified. Published in the Encyclopedia of Artificial Intelligence in Marketing (2026). <strong>Portuguese citizen — full EU work permit.</strong> Master of Marketing, magna cum laude, Católica Porto Business School. English native; Portuguese B2; Dutch developing.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 linkedin.com/in/barros-tiago-</span>
+        <span>📅 Profile active</span>
+        <span>🏷 Connections · Certifications · Publications</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 6 - Behance -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">Be</div>
+        <div>
+          <div class="g-result-source">Behance</div>
+          <div class="g-result-source-url">behance.net › tiagodebarros1</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.behance.net/tiagodebarros1" target="_blank">Tiago de Barros — Design & Visual Portfolio | Behance</a>
+      <p class="g-result-snippet">
+        Visual communication and brand design work. Relevant because great product content for Amazon and e-commerce platforms lives at the intersection of writing, visual hierarchy, and brand understanding — and Tiago brings sensibility across all three rather than treating copy as isolated from the product experience it sits inside.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 behance.net/tiagodebarros1</span>
+        <span>📅 Portfolio active</span>
+        <span>🏷 Brand Design · Editorial · Visual Communication</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 7 - Strava -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon" style="background:#FC4C02;">S</div>
+        <div>
+          <div class="g-result-source">Strava</div>
+          <div class="g-result-source-url">strava.com › athletes › 67746291</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.strava.com/athletes/67746291" target="_blank">Tiago Barros — Strava | Consistent. Shows Up. Tracks Everything.</a>
+      <p class="g-result-snippet">
+        VML is part of WPP, the world's largest digital media agency. Working in a Luxembourg content team managing multilingual Amazon listings at scale requires exactly the discipline, consistency, and data-tracking mindset this profile shows. Someone who monitors their own performance metrics and keeps showing up is someone who will do the same with a content quality dashboard.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 strava.com/athletes/67746291</span>
+        <span>📅 Active</span>
+        <span>🏷 Running · Consistency · Performance Tracking</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KNOWLEDGE PANEL -->
+  <aside class="g-kp">
+    <div class="g-kp-image">
+      <img src="data:image/jpeg;base64,PHOTO_BASE64_PLACEHOLDER" alt="Tiago Barros" />
+    </div>
+    <div class="g-kp-body">
+      <div class="g-kp-name">Tiago Barros</div>
+      <div class="g-kp-type">Native English Content Specialist & GEO Practitioner</div>
+      <div class="g-kp-desc">
+        6+ years writing, editing, and optimising content across diverse categories and markets. Built ECB's first GEO framework. Published AI marketing researcher. Portuguese citizen with full EU work permit for Luxembourg.
+      </div>
+      <div class="g-kp-row"><span class="g-kp-label">Citizenship</span><span class="g-kp-value"><span class="g-kp-green-tag">🇵🇹 Portuguese — EU Work Permit</span></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Languages</span><span class="g-kp-value">English (native) · Portuguese (B2) · Dutch (developing)</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Education</span><span class="g-kp-value">MSc Marketing, magna cum laude (Masters) — Católica Porto Business School</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Also</span><span class="g-kp-value">BCom Honours, Business Sciences/Marketing — University of the Witwatersrand</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Research</span><span class="g-kp-value"><a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID 0009-0004-1927-5925</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Email</span><span class="g-kp-value"><a href="mailto:tiagodb3@gmail.com">tiagodb3@gmail.com</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Certs</span><span class="g-kp-value">
+        <span class="g-kp-tag">Semrush AI Search</span>
+        <span class="g-kp-tag">Ahrefs</span>
+        <span class="g-kp-tag">GA4</span>
+        <span class="g-kp-tag">DMI</span>
+        <span class="g-kp-tag">HubSpot</span>
+      </span></div>
+      <div class="g-kp-socials">
+        <a class="g-kp-social-btn" href="https://714go.github.io" target="_blank">🌐 Portfolio</a>
+        <a class="g-kp-social-btn" href="https://marketingautomation.lovable.app" target="_blank">✨ Research</a>
+        <a class="g-kp-social-btn" href="https://linkedin.com/in/barros-tiago-/" target="_blank">in LinkedIn</a>
+        <a class="g-kp-social-btn" href="https://orcid.org/0009-0004-1927-5925" target="_blank">◎ ORCID</a>
+        <a class="g-kp-social-btn" href="https://www.behance.net/tiagodebarros1" target="_blank">Be Behance</a>
+        <a class="g-kp-social-btn" href="https://www.strava.com/athletes/67746291" target="_blank">🏃 Strava</a>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<script>
+function togglePAA(el) {
+  const answer = el.nextElementSibling;
+  const chevron = el.querySelector('.paa-chevron');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.paa-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.paa-chevron').forEach(c => c.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('open'); chevron.classList.add('open'); }
+}
+</script>
+</body>
+</html>
