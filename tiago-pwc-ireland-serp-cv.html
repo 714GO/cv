@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tiago Barros — PwC Ireland Web Specialist</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: arial, sans-serif; background: #fff; color: #202124; font-size: 14px; line-height: 1.58; }
+
+  .g-header { border-bottom: 1px solid #ebebeb; padding: 16px 0 0; position: sticky; top: 0; background: #fff; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+  .g-header-inner { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  .g-logo { font-size: 28px; font-weight: 400; letter-spacing: -1px; margin-bottom: 12px; display: inline-block; text-decoration: none; }
+  .g-logo .g-b { color: #4285F4; } .g-logo .g-r { color: #EA4335; }
+  .g-logo .g-y { color: #FBBC05; } .g-logo .g-gb { color: #4285F4; }
+  .g-logo .g-gr { color: #34A853; } .g-logo .g-ge { color: #EA4335; }
+
+  .g-search-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .g-search-box { display: flex; align-items: center; border: 1px solid #dfe1e5; border-radius: 24px; padding: 9px 18px 9px 22px; width: 640px; max-width: 100%; transition: box-shadow .15s; }
+  .g-search-box:hover { box-shadow: 0 1px 8px rgba(32,33,36,.28); border-color: rgba(223,225,229,0); }
+  .g-search-input { flex: 1; border: none; outline: none; font-size: 16px; color: #202124; font-family: arial, sans-serif; background: transparent; }
+  .g-search-icons { color: #9aa0a6; }
+
+  .g-nav { display: flex; font-size: 13px; color: #70757a; border-top: 1px solid #ebebeb; margin-top: 4px; overflow-x: auto; }
+  .g-nav-item { padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 6px; border-bottom: 3px solid transparent; color: #70757a; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .g-nav-item.active { color: #1a73e8; border-bottom-color: #1a73e8; }
+  .g-nav-item:hover { color: #202124; background: #f8f9fa; }
+
+  .g-body { max-width: 1080px; margin: 0 auto; padding: 24px 24px 80px; display: grid; grid-template-columns: 1fr 340px; gap: 48px; }
+
+  .g-result-count { font-size: 13px; color: #70757a; margin-bottom: 18px; }
+  .g-result-count span { color: #202124; }
+  .g-tools { font-size: 13px; color: #70757a; margin-bottom: 22px; display: flex; gap: 18px; flex-wrap: wrap; }
+
+  /* CALLOUT BOXES */
+  .g-sa-box { background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%); border: 1px solid #ffe082; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; max-width: 680px; }
+  .g-sa-label { font-size: 12px; font-weight: 700; color: #e65100; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .g-sa-text { font-size: 13px; color: #4e342e; line-height: 1.65; }
+
+  .g-pt-box { background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%); border: 1px solid #a5d6a7; border-radius: 10px; padding: 14px 18px; margin-bottom: 28px; max-width: 680px; }
+  .g-pt-label { font-size: 12px; font-weight: 700; color: #2e7d32; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .g-pt-text { font-size: 13px; color: #1b5e20; line-height: 1.65; }
+
+  /* FEATURED */
+  .g-featured { border: 1px solid #dfe1e5; border-radius: 12px; padding: 20px 24px; margin-bottom: 28px; max-width: 680px; background: linear-gradient(135deg, #fafbff 0%, #fff 100%); }
+  .g-featured-label { font-size: 12px; color: #70757a; margin-bottom: 10px; display: flex; align-items: center; gap: 4px; font-weight: 500; }
+  .g-featured-content { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .g-featured-source { display: flex; align-items: center; gap: 10px; font-size: 13px; padding-top: 12px; border-top: 1px solid #ebebeb; }
+  .g-featured-source a { color: #1a0dab; text-decoration: none; font-weight: 500; }
+  .g-featured-source a:hover { text-decoration: underline; }
+
+  /* HONEST BOX */
+  .g-honest-box { border: 1px solid #fde293; background: #fef9e7; border-radius: 8px; padding: 14px 18px; margin-bottom: 28px; max-width: 680px; }
+  .g-honest-label { font-size: 12px; font-weight: 700; color: #b06000; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .g-honest-text { font-size: 13px; color: #4d3800; line-height: 1.6; }
+
+  /* RESULTS */
+  .g-result { margin-bottom: 32px; }
+  .g-result-url-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .g-favicon { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .fav-blue  { background: #4285F4; }
+  .fav-green { background: #34A853; }
+  .fav-dark  { background: #202124; }
+  .fav-pwc   { background: #D04A02; }
+
+  .g-result-source { font-size: 14px; color: #202124; line-height: 1.4; }
+  .g-result-source-url { font-size: 12px; color: #70757a; }
+
+  .g-result-title { font-size: 20px; font-weight: 400; color: #1a0dab; line-height: 1.3; cursor: pointer; text-decoration: none; display: block; margin-bottom: 5px; }
+  .g-result-title:hover { text-decoration: underline; }
+  .g-result-title:visited { color: #681da8; }
+
+  .g-result-snippet { font-size: 14px; color: #4d5156; line-height: 1.62; max-width: 660px; margin-bottom: 8px; }
+  .g-result-snippet strong { color: #202124; font-weight: 700; }
+  .g-date { font-size: 14px; color: #70757a; margin-right: 4px; }
+
+  .g-result-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: #70757a; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ebebeb; max-width: 660px; }
+  .g-result-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .g-sitelinks { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 28px; margin-top: 12px; max-width: 600px; }
+  .g-sitelink { font-size: 14px; color: #1a0dab; text-decoration: none; display: flex; align-items: center; gap: 4px; padding: 5px 0; border-top: 1px solid #ebebeb; }
+  .g-sitelink:hover { text-decoration: underline; padding-left: 4px; }
+
+  .g-divider { border: none; border-top: 1px solid #ebebeb; margin: 24px 0; }
+
+  /* PAA */
+  .paa-section { margin-bottom: 32px; max-width: 680px; }
+  .paa-title { font-size: 20px; font-weight: 400; color: #202124; margin-bottom: 14px; }
+  .paa-item { border: 1px solid #dfe1e5; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .paa-question { display: flex; justify-content: space-between; align-items: center; padding: 15px 18px; cursor: pointer; font-size: 15px; color: #202124; background: #fff; user-select: none; }
+  .paa-question:hover { background: #f8f9fa; }
+  .paa-chevron { flex-shrink: 0; width: 22px; height: 22px; color: #70757a; transition: transform .2s; }
+  .paa-chevron.open { transform: rotate(180deg); }
+  .paa-answer { display: none; border-top: 1px solid #ebebeb; padding: 18px; background: #fafafa; }
+  .paa-answer.open { display: block; }
+  .paa-answer-text { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .paa-answer-source { display: flex; align-items: center; gap: 8px; font-size: 13px; padding-top: 10px; border-top: 1px solid #ebebeb; }
+  .paa-answer-source a { color: #1a0dab; text-decoration: none; }
+  .paa-answer-source a:hover { text-decoration: underline; }
+
+  /* KNOWLEDGE PANEL */
+  .g-kp { border: 1px solid #dfe1e5; border-radius: 12px; overflow: hidden; font-size: 14px; align-self: start; position: sticky; top: 104px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .g-kp-image { width: 100%; height: 220px; background: #e8eaed; overflow: hidden; }
+  .g-kp-image img { width: 100%; height: 100%; object-fit: cover; }
+  .g-kp-body { padding: 18px; }
+  .g-kp-name { font-size: 24px; font-weight: 400; color: #202124; margin-bottom: 2px; }
+  .g-kp-type { font-size: 14px; color: #70757a; margin-bottom: 14px; }
+  .g-kp-desc { font-size: 13px; color: #4d5156; line-height: 1.6; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #ebebeb; }
+  .g-kp-row { display: flex; gap: 8px; margin-bottom: 9px; font-size: 13px; }
+  .g-kp-label { color: #70757a; min-width: 80px; flex-shrink: 0; font-weight: 500; }
+  .g-kp-value { color: #202124; }
+  .g-kp-value a { color: #1a0dab; text-decoration: none; }
+  .g-kp-value a:hover { text-decoration: underline; }
+  .g-kp-tag { display: inline-block; background: #e8f0fe; color: #1a73e8; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-sa-tag { display: inline-block; background: #fff8e1; color: #e65100; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-pt-tag { display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-gap-tag { display: inline-block; background: #fef3e0; color: #b06000; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 500; }
+  .g-kp-socials { display: flex; gap: 8px; padding-top: 14px; border-top: 1px solid #ebebeb; margin-top: 10px; flex-wrap: wrap; }
+  .g-kp-social-btn { border: 1px solid #dfe1e5; border-radius: 20px; padding: 7px 14px; font-size: 12px; color: #1a0dab; text-decoration: none; transition: background .15s; font-weight: 500; }
+  .g-kp-social-btn:hover { background: #f8f9fa; text-decoration: underline; }
+
+  @media (max-width: 820px) {
+    .g-body { grid-template-columns: 1fr; }
+    .g-kp { display: none; }
+    .g-search-box { width: 100%; }
+    .g-sitelinks { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="g-header">
+  <div class="g-header-inner">
+    <a class="g-logo" href="#">
+      <span class="g-b">G</span><span class="g-r">o</span><span class="g-y">o</span><span class="g-gb">g</span><span class="g-gr">l</span><span class="g-ge">e</span>
+    </a>
+    <div class="g-search-row">
+      <div class="g-search-box">
+        <input class="g-search-input" type="text" value="Tiago Barros Web Specialist PwC Ireland Dublin AEM SEO" readonly />
+        <div class="g-search-icons">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+      </div>
+    </div>
+    <nav class="g-nav">
+      <a class="g-nav-item active" href="#">All</a>
+      <a class="g-nav-item" href="https://714go.github.io" target="_blank">Portfolio</a>
+      <a class="g-nav-item" href="https://marketingautomation.lovable.app" target="_blank">✨ Research</a>
+      <a class="g-nav-item" href="https://linkedin.com/in/barros-tiago-/" target="_blank">LinkedIn</a>
+      <a class="g-nav-item" href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID</a>
+      <a class="g-nav-item" href="https://www.behance.net/tiagodebarros1" target="_blank">Behance</a>
+    </nav>
+  </div>
+</header>
+
+<main class="g-body">
+  <div class="g-main">
+
+    <p class="g-result-count">About <span>6 results</span> (0.34 seconds) for Tiago Barros — Web Specialist, PwC Ireland</p>
+
+    <div class="g-tools">
+      <span>🇿🇦 South African actively relocating to Ireland</span>
+      <span>🇵🇹 Portuguese citizen — EU work permit confirmed</span>
+      <span>🌍 Web publishing across 24 EU languages</span>
+      <span>📚 Published researcher</span>
+    </div>
+
+    <!-- SOUTH AFRICAN CALLOUT -->
+    <div class="g-sa-box">
+      <div class="g-sa-label">🇿🇦 South African — Actively Relocating to Ireland</div>
+      <div class="g-sa-text">
+        Tiago is South African and actively relocating to Ireland. South Africans are one of the most established and highly regarded migrant communities in the country, known for work ethic, adaptability, and strong professional instincts that Irish hiring teams across Dublin's financial and professional services sector recognise well. PwC Ireland will have met plenty. He brings that background with the added dimension of European institutional experience at the ECB and multilingual content operations across 24 EU markets.
+      </div>
+    </div>
+
+    <!-- PORTUGUESE CITIZENSHIP CALLOUT -->
+    <div class="g-pt-box">
+      <div class="g-pt-label">🇵🇹 Portuguese Citizen — Full EU Work Permit, No Sponsorship Required</div>
+      <div class="g-pt-text">
+        Tiago holds Portuguese citizenship and therefore unrestricted EU working rights. He can begin work in Ireland immediately, without visa sponsorship, immigration processing, or any bureaucratic delay. For a professional services firm where compliance and clean hiring processes matter, this removes one of the most common friction points from the application entirely.
+      </div>
+    </div>
+
+    <!-- FEATURED -->
+    <div class="g-featured">
+      <div class="g-featured-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#70757a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Featured result
+      </div>
+      <div class="g-featured-content">
+        Tiago Barros is a web specialist and digital content professional with 6+ years building, publishing, and maintaining pages across enterprise CMS platforms, applying SEO fundamentals and analytics insights to improve site performance, coordinating with designers and content teams, and ensuring accessibility and brand consistency across digital channels. He brings significantly more experience than the role requires — flagged honestly — but his motivation for Dublin and PwC specifically is genuine, and the depth he brings to a digital team is additive rather than threatening.
+      </div>
+      <div class="g-featured-source">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div style="font-size:13px;color:#202124;">714go.github.io</div>
+          <a href="https://714go.github.io" target="_blank">714go.github.io — Full Portfolio →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HONEST BOX -->
+    <div class="g-honest-box">
+      <div class="g-honest-label">⚠ Honest match notes</div>
+      <div class="g-honest-text">
+        This is an early-career 12-month fixed term role and Tiago has 6+ years of experience. PwC may screen for overqualification. AEM is listed as the CMS and Tiago's depth is in Drupal and WordPress — the closest enterprise parallel, but not identical. Both are worth addressing directly in a cover letter rather than hoping they go unnoticed.
+      </div>
+    </div>
+
+    <!-- RESULT 1 -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Digital Portfolio</div>
+          <div class="g-result-source-url">714go.github.io</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io" target="_blank">Tiago Barros — Web Specialist, CMS & Digital Experience | South African · Portuguese Citizen · Dublin-Bound</a>
+      <p class="g-result-snippet">
+        <span class="g-date">Updated 2025 —</span>
+        6+ years building, publishing, and maintaining web pages across enterprise CMS platforms. SEO fundamentals, accessibility, analytics-driven optimisation, and cross-functional coordination with design and content teams. Managed web publishing across <strong>three institutional domains and 24 official EU languages</strong> at the ECB. HTML and CSS hands-on. Adobe Photoshop and Illustrator proficient. South African, Portuguese citizen, actively relocating to Dublin.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io</span>
+        <span>📅 Last updated 2025</span>
+        <span>🏷 CMS Publishing · SEO · Accessibility · Analytics · HTML/CSS</span>
+      </div>
+      <div class="g-sitelinks">
+        <a class="g-sitelink" href="https://714go.github.io/experience/ecb.html" target="_blank">↗ ECB Web Publishing Case Study</a>
+        <a class="g-sitelink" href="https://714go.github.io/about.html" target="_blank">↗ About Tiago</a>
+        <a class="g-sitelink" href="https://orcid.org/0009-0004-1927-5925" target="_blank">↗ Published Research</a>
+        <a class="g-sitelink" href="https://www.behance.net/tiagodebarros1" target="_blank">↗ Design Portfolio</a>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 2 - ECB -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Case Study</div>
+          <div class="g-result-source-url">714go.github.io › experience › ecb</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io/experience/ecb.html" target="_blank">European Central Bank — Web Publishing, CMS & Digital Experience, Frankfurt</a>
+      <p class="g-result-snippet">
+        Built, published, and maintained web pages across three institutional domains using Drupal CMS, working with designers and content specialists to translate briefs into functional web experiences. Applied SEO fundamentals, brand standards, and accessibility principles consistently. Used GA4, Piano Analytics, and heatmapping tools to support continuous improvement of site structure and user journeys. Applied HTML and CSS for front-end implementation and troubleshooting. Coordinated with IT and development teams via Jira.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io/experience/ecb.html</span>
+        <span>📅 Role period ending 07/2024</span>
+        <span>🏷 CMS · HTML/CSS · Accessibility · Analytics · Cross-Device · Brand Standards</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- PEOPLE ALSO ASK -->
+    <div class="paa-section">
+      <h2 class="paa-title">People also ask</h2>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Is Tiago too senior for this role, and if so why is he applying?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Honestly, yes — his experience level exceeds what this role is designed for. He is applying for a specific reason: Dublin. He is a South African with Portuguese citizenship actively relocating to Ireland, and PwC is one of the most respected professional services firms in the country. A 12-month contract at PwC Ireland is a concrete, credible way to establish himself in Dublin, build institutional relationships in the Irish market, and contribute something meaningful in a collaborative digital team while doing so. The role is not a step back in ambition — it is a pragmatic, deliberate first step in a specific city with a specific employer he respects.
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Does Tiago have AEM experience, given that PwC Ireland runs on Adobe Experience Manager?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Not hands-on AEM specifically — his enterprise CMS depth is in Drupal, which he used across three institutional ECB domains. AEM and Drupal share the same enterprise CMS logic — component-based authoring, structured content models, governance workflows, and developer-editorial collaboration patterns. His Drupal experience is not a workaround for AEM familiarity; it is a directly transferable foundation that most candidates applying for an early-career AEM role will not have. He has reviewed AEM's authoring interface and architecture and is comfortable onboarding quickly given the depth he brings from Drupal.
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Can Tiago apply accessibility and brand standards consistently across digital outputs?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes. At the ECB, accessibility compliance and institutional brand standards were non-negotiable constraints on every piece of published content — not aspirational guidelines. He developed and maintained internal documentation covering accessibility standards, brand application rules, and content governance for editorial teams across three domains and 24 EU languages. Applying brand and design standards consistently across all digital outputs is not a new discipline for him — it is how he has operated throughout his institutional career.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — Brand & Accessibility Standards</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>What does Tiago bring to a PwC digital team that a typical early-career candidate would not?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Three things a typical 2-year candidate would not have. First, genuine enterprise-scale web experience — not student projects or agency placements, but three institutional platforms serving audiences in 24 languages with zero tolerance for production errors. Second, an understanding of how search and AI discoverability connect to content structure — he built a GEO framework and published academic research on it, which means his SEO contribution to PwC's digital team goes well beyond basic metadata. Third, the professional maturity that comes from coordinating with legal, IT, and communications stakeholders in a regulated European institution — exactly the kind of environment PwC's internal digital teams operate in.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io" target="_blank">714go.github.io — Full Portfolio</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 3 - LinkedIn -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">in</div>
+        <div>
+          <div class="g-result-source">LinkedIn</div>
+          <div class="g-result-source-url">linkedin.com › in › barros-tiago-</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://linkedin.com/in/barros-tiago-/" target="_blank">Tiago Barros — Web Specialist & Digital Experience Professional | LinkedIn</a>
+      <p class="g-result-snippet">
+        6+ years across web publishing, CMS management, SEO, and digital experience. ECB institutional alumni across 24 EU languages. Semrush and Ahrefs certified. Published in the Encyclopedia of Artificial Intelligence in Marketing (2026). <strong>South African. Portuguese citizen — full EU work permit. Actively relocating to Dublin.</strong> Master of Marketing, magna cum laude, Católica Porto Business School.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 linkedin.com/in/barros-tiago-</span>
+        <span>📅 Profile active</span>
+        <span>🏷 Connections · Certifications · Publications</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 4 - ORCID -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-green">R</div>
+        <div>
+          <div class="g-result-source">ORCID Research Profile</div>
+          <div class="g-result-source-url">orcid.org › 0009-0004-1927-5925</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://orcid.org/0009-0004-1927-5925" target="_blank">Tiago de Barros — ORCID | Published Research, AI Marketing & Web Discoverability</a>
+      <p class="g-result-snippet">
+        <strong>Dabić, M., de Barros, T.S., Vlačić, B. (2026).</strong> Marketing Automation: Innovations and Opportunities. Encyclopedia of Artificial Intelligence in Marketing.
+        <strong>de la Roche, C., de Barros, T., et al. (2022).</strong> Consumer Perceptions of Email and Social Media Marketing. International Review of Management and Marketing, 12(4), 29–37.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 orcid.org/0009-0004-1927-5925</span>
+        <span>📅 2022, 2026</span>
+        <span>🏷 Peer-reviewed · AI Marketing · SEO Research</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 5 - Interactive research -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon" style="background:#FBBC05;color:#202124;">L</div>
+        <div>
+          <div class="g-result-source">Lovable — Interactive Research Build</div>
+          <div class="g-result-source-url">marketingautomation.lovable.app</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://marketingautomation.lovable.app" target="_blank">Marketing Automation: Innovations & Opportunities — Interactive Thesis</a>
+      <p class="g-result-snippet">
+        Published academic paper rebuilt as an interactive web experience using AI-assisted vibe coding. A working demonstration of front-end thinking, content structure, and digital execution instinct — exactly the sensibility PwC's digital team would benefit from in someone helping build and optimise their web presence.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 marketingautomation.lovable.app</span>
+        <span>📅 Built 2025</span>
+        <span>🏷 Front-End Thinking · Content Structure · Built & Shipped</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 6 - Behance -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">Be</div>
+        <div>
+          <div class="g-result-source">Behance</div>
+          <div class="g-result-source-url">behance.net › tiagodebarros1</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.behance.net/tiagodebarros1" target="_blank">Tiago de Barros — Design & Visual Portfolio | Behance</a>
+      <p class="g-result-snippet">
+        Visual communication and editorial design work. Demonstrates the design literacy — familiarity with wireframing, visual hierarchy, and brand application — that underpins effective collaboration with PwC's design team on translating concepts into functional web experiences.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 behance.net/tiagodebarros1</span>
+        <span>📅 Portfolio active</span>
+        <span>🏷 Brand Design · Editorial · Visual Identity · Adobe Suite</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KNOWLEDGE PANEL -->
+  <aside class="g-kp">
+    <div class="g-kp-image">
+      <img src="data:image/jpeg;base64,PHOTO_BASE64_PLACEHOLDER" alt="Tiago Barros" />
+    </div>
+    <div class="g-kp-body">
+      <div class="g-kp-name">Tiago Barros</div>
+      <div class="g-kp-type">Web Specialist & Digital Experience Professional</div>
+      <div class="g-kp-desc">
+        South African, Portuguese citizen, actively relocating to Dublin. 6+ years in web publishing, CMS, SEO, and digital experience. ECB alumni across 24 EU languages. Published AI marketing researcher.
+      </div>
+      <div class="g-kp-row"><span class="g-kp-label">Nationality</span><span class="g-kp-value"><span class="g-kp-sa-tag">🇿🇦 South African</span></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Citizenship</span><span class="g-kp-value"><span class="g-kp-pt-tag">🇵🇹 Portuguese — Full EU Rights</span></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Relocating</span><span class="g-kp-value">Actively moving to Dublin, Ireland</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Languages</span><span class="g-kp-value">English (native C1+) · Portuguese (B2) · Dutch (A2)</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Education</span><span class="g-kp-value">MSc Marketing, magna cum laude (Masters) — Católica Porto Business School</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Also</span><span class="g-kp-value">BCom Honours — University of the Witwatersrand</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Research</span><span class="g-kp-value"><a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID 0009-0004-1927-5925</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Gap</span><span class="g-kp-value"><span class="g-kp-gap-tag">AEM (Drupal parallel)</span></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Email</span><span class="g-kp-value"><a href="mailto:tiagodb3@gmail.com">tiagodb3@gmail.com</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Certs</span><span class="g-kp-value">
+        <span class="g-kp-tag">Semrush SEO</span>
+        <span class="g-kp-tag">Ahrefs</span>
+        <span class="g-kp-tag">GA4</span>
+        <span class="g-kp-tag">DMI</span>
+      </span></div>
+      <div class="g-kp-socials">
+        <a class="g-kp-social-btn" href="https://714go.github.io" target="_blank">🌐 Portfolio</a>
+        <a class="g-kp-social-btn" href="https://marketingautomation.lovable.app" target="_blank">✨ Research</a>
+        <a class="g-kp-social-btn" href="https://linkedin.com/in/barros-tiago-/" target="_blank">in LinkedIn</a>
+        <a class="g-kp-social-btn" href="https://orcid.org/0009-0004-1927-5925" target="_blank">◎ ORCID</a>
+        <a class="g-kp-social-btn" href="https://www.behance.net/tiagodebarros1" target="_blank">Be Behance</a>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<script>
+function togglePAA(el) {
+  const answer = el.nextElementSibling;
+  const chevron = el.querySelector('.paa-chevron');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.paa-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.paa-chevron').forEach(c => c.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('open'); chevron.classList.add('open'); }
+}
+</script>
+</body>
+</html>
