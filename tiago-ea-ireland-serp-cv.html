@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tiago Barros — EA Search Strategist, Ireland</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: arial, sans-serif; background: #fff; color: #202124; font-size: 14px; line-height: 1.58; }
+
+  .g-header { border-bottom: 1px solid #ebebeb; padding: 16px 0 0; position: sticky; top: 0; background: #fff; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+  .g-header-inner { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  .g-logo { font-size: 28px; font-weight: 400; letter-spacing: -1px; margin-bottom: 12px; display: inline-block; text-decoration: none; }
+  .g-logo .g-b { color: #4285F4; } .g-logo .g-r { color: #EA4335; }
+  .g-logo .g-y { color: #FBBC05; } .g-logo .g-gb { color: #4285F4; }
+  .g-logo .g-gr { color: #34A853; } .g-logo .g-ge { color: #EA4335; }
+
+  .g-search-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .g-search-box { display: flex; align-items: center; border: 1px solid #dfe1e5; border-radius: 24px; padding: 9px 18px 9px 22px; width: 660px; max-width: 100%; transition: box-shadow .15s; }
+  .g-search-box:hover { box-shadow: 0 1px 8px rgba(32,33,36,.28); border-color: rgba(223,225,229,0); }
+  .g-search-input { flex: 1; border: none; outline: none; font-size: 16px; color: #202124; font-family: arial, sans-serif; background: transparent; }
+  .g-search-icons { color: #9aa0a6; }
+
+  .g-nav { display: flex; font-size: 13px; color: #70757a; border-top: 1px solid #ebebeb; margin-top: 4px; overflow-x: auto; }
+  .g-nav-item { padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 6px; border-bottom: 3px solid transparent; color: #70757a; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .g-nav-item.active { color: #1a73e8; border-bottom-color: #1a73e8; }
+  .g-nav-item:hover { color: #202124; background: #f8f9fa; }
+
+  .g-body { max-width: 1080px; margin: 0 auto; padding: 24px 24px 80px; display: grid; grid-template-columns: 1fr 340px; gap: 48px; }
+
+  .g-result-count { font-size: 13px; color: #70757a; margin-bottom: 18px; }
+  .g-result-count span { color: #202124; }
+  .g-tools { font-size: 13px; color: #70757a; margin-bottom: 22px; display: flex; gap: 18px; flex-wrap: wrap; }
+
+  /* AI OVERVIEW */
+  .g-ai-overview { background: linear-gradient(135deg, #EEF2FF 0%, #F0F7FF 100%); border: 1px solid #C7D7FA; border-radius: 12px; padding: 18px 22px; margin-bottom: 28px; max-width: 680px; }
+  .g-ai-label { font-size: 12px; font-weight: 700; color: #1a73e8; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; letter-spacing: .5px; text-transform: uppercase; }
+  .g-ai-content { font-size: 14px; color: #202124; line-height: 1.72; }
+  .g-ai-content strong { color: #1a0dab; }
+  .g-ai-sources { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .g-ai-source-chip { display: flex; align-items: center; gap: 6px; border: 1px solid #C7D7FA; border-radius: 20px; padding: 4px 12px; font-size: 12px; color: #1a0dab; text-decoration: none; background: #fff; transition: background .15s; }
+  .g-ai-source-chip:hover { background: #EEF2FF; text-decoration: underline; }
+
+  /* SOUTH AFRICAN CALLOUT */
+  .g-sa-box { background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%); border: 1px solid #ffe082; border-radius: 10px; padding: 14px 18px; margin-bottom: 28px; max-width: 680px; }
+  .g-sa-label { font-size: 12px; font-weight: 700; color: #e65100; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .g-sa-text { font-size: 13px; color: #4e342e; line-height: 1.65; }
+
+  /* FEATURED */
+  .g-featured { border: 1px solid #dfe1e5; border-radius: 12px; padding: 20px 24px; margin-bottom: 28px; max-width: 680px; background: linear-gradient(135deg, #fafbff 0%, #fff 100%); }
+  .g-featured-label { font-size: 12px; color: #70757a; margin-bottom: 10px; display: flex; align-items: center; gap: 4px; font-weight: 500; }
+  .g-featured-content { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .g-featured-source { display: flex; align-items: center; gap: 10px; font-size: 13px; padding-top: 12px; border-top: 1px solid #ebebeb; }
+  .g-featured-source a { color: #1a0dab; text-decoration: none; font-weight: 500; }
+  .g-featured-source a:hover { text-decoration: underline; }
+
+  /* RESULTS */
+  .g-result { margin-bottom: 32px; }
+  .g-result-url-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .g-favicon { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .fav-blue  { background: #4285F4; }
+  .fav-green { background: #34A853; }
+  .fav-dark  { background: #202124; }
+  .fav-ea    { background: #FF4500; }
+
+  .g-result-source { font-size: 14px; color: #202124; line-height: 1.4; }
+  .g-result-source-url { font-size: 12px; color: #70757a; }
+
+  .g-result-title { font-size: 20px; font-weight: 400; color: #1a0dab; line-height: 1.3; cursor: pointer; text-decoration: none; display: block; margin-bottom: 5px; }
+  .g-result-title:hover { text-decoration: underline; }
+  .g-result-title:visited { color: #681da8; }
+
+  .g-result-snippet { font-size: 14px; color: #4d5156; line-height: 1.62; max-width: 660px; margin-bottom: 8px; }
+  .g-result-snippet strong { color: #202124; font-weight: 700; }
+  .g-date { font-size: 14px; color: #70757a; margin-right: 4px; }
+
+  .g-result-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: #70757a; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ebebeb; max-width: 660px; }
+  .g-result-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .g-sitelinks { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 28px; margin-top: 12px; max-width: 600px; }
+  .g-sitelink { font-size: 14px; color: #1a0dab; text-decoration: none; display: flex; align-items: center; gap: 4px; padding: 5px 0; border-top: 1px solid #ebebeb; }
+  .g-sitelink:hover { text-decoration: underline; padding-left: 4px; }
+
+  .g-divider { border: none; border-top: 1px solid #ebebeb; margin: 24px 0; }
+
+  /* PAA */
+  .paa-section { margin-bottom: 32px; max-width: 680px; }
+  .paa-title { font-size: 20px; font-weight: 400; color: #202124; margin-bottom: 14px; }
+  .paa-item { border: 1px solid #dfe1e5; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .paa-question { display: flex; justify-content: space-between; align-items: center; padding: 15px 18px; cursor: pointer; font-size: 15px; color: #202124; background: #fff; user-select: none; }
+  .paa-question:hover { background: #f8f9fa; }
+  .paa-chevron { flex-shrink: 0; width: 22px; height: 22px; color: #70757a; transition: transform .2s; }
+  .paa-chevron.open { transform: rotate(180deg); }
+  .paa-answer { display: none; border-top: 1px solid #ebebeb; padding: 18px; background: #fafafa; }
+  .paa-answer.open { display: block; }
+  .paa-answer-text { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .paa-answer-source { display: flex; align-items: center; gap: 8px; font-size: 13px; padding-top: 10px; border-top: 1px solid #ebebeb; }
+  .paa-answer-source a { color: #1a0dab; text-decoration: none; }
+  .paa-answer-source a:hover { text-decoration: underline; }
+
+  /* KNOWLEDGE PANEL */
+  .g-kp { border: 1px solid #dfe1e5; border-radius: 12px; overflow: hidden; font-size: 14px; align-self: start; position: sticky; top: 104px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .g-kp-image { width: 100%; height: 220px; background: #e8eaed; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .g-kp-image img { width: 100%; height: 100%; object-fit: cover; }
+  .g-kp-body { padding: 18px; }
+  .g-kp-name { font-size: 24px; font-weight: 400; color: #202124; margin-bottom: 2px; }
+  .g-kp-type { font-size: 14px; color: #70757a; margin-bottom: 14px; }
+  .g-kp-desc { font-size: 13px; color: #4d5156; line-height: 1.6; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #ebebeb; }
+  .g-kp-row { display: flex; gap: 8px; margin-bottom: 9px; font-size: 13px; }
+  .g-kp-label { color: #70757a; min-width: 80px; flex-shrink: 0; font-weight: 500; }
+  .g-kp-value { color: #202124; }
+  .g-kp-value a { color: #1a0dab; text-decoration: none; }
+  .g-kp-value a:hover { text-decoration: underline; }
+  .g-kp-tag { display: inline-block; background: #e8f0fe; color: #1a73e8; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-sa-tag { display: inline-block; background: #fff8e1; color: #e65100; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-socials { display: flex; gap: 8px; padding-top: 14px; border-top: 1px solid #ebebeb; margin-top: 10px; flex-wrap: wrap; }
+  .g-kp-social-btn { border: 1px solid #dfe1e5; border-radius: 20px; padding: 7px 14px; font-size: 12px; color: #1a0dab; text-decoration: none; transition: background .15s; font-weight: 500; }
+  .g-kp-social-btn:hover { background: #f8f9fa; text-decoration: underline; }
+
+  @media (max-width: 820px) {
+    .g-body { grid-template-columns: 1fr; }
+    .g-kp { display: none; }
+    .g-search-box { width: 100%; }
+    .g-sitelinks { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="g-header">
+  <div class="g-header-inner">
+    <a class="g-logo" href="#">
+      <span class="g-b">G</span><span class="g-r">o</span><span class="g-y">o</span><span class="g-gb">g</span><span class="g-gr">l</span><span class="g-ge">e</span>
+    </a>
+    <div class="g-search-row">
+      <div class="g-search-box">
+        <input class="g-search-input" type="text" value="Tiago Barros Search Strategist EA Help SEO GEO Ireland" readonly />
+        <div class="g-search-icons">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+      </div>
+    </div>
+    <nav class="g-nav">
+      <a class="g-nav-item active" href="#">All</a>
+      <a class="g-nav-item" href="https://714go.github.io" target="_blank">Portfolio</a>
+      <a class="g-nav-item" href="https://marketingautomation.lovable.app" target="_blank">✨ Interactive Research</a>
+      <a class="g-nav-item" href="https://linkedin.com/in/barros-tiago-/" target="_blank">LinkedIn</a>
+      <a class="g-nav-item" href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID</a>
+      <a class="g-nav-item" href="https://www.behance.net/tiagodebarros1" target="_blank">Behance</a>
+      <a class="g-nav-item" href="https://www.strava.com/athletes/67746291" target="_blank">Strava</a>
+    </nav>
+  </div>
+</header>
+
+<main class="g-body">
+  <div class="g-main">
+
+    <p class="g-result-count">About <span>7 results</span> (0.29 seconds) for Tiago Barros — Search Strategist, Electronic Arts Ireland</p>
+
+    <div class="g-tools">
+      <span>🇿🇦 South African actively relocating to Ireland</span>
+      <span>🤖 GEO & AI search practitioner — built ECB framework from scratch</span>
+      <span>📚 Published researcher — AI-driven marketing</span>
+      <span>✅ Full EU working rights</span>
+    </div>
+
+    <!-- AI OVERVIEW -->
+    <div class="g-ai-overview">
+      <div class="g-ai-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        AI Overview
+      </div>
+      <div class="g-ai-content">
+        Tiago Barros is a South African SEO and AI search strategist actively relocating to Ireland, with 6+ years owning technical SEO, content-led search performance, and <strong>Generative Engine Optimisation (GEO)</strong> across enterprise-scale institutional and multi-industry platforms. He built the European Central Bank's first GEO framework from scratch — implementing structured data, schema enhancements, E-E-A-T improvements, and LLM answerability architecture across three institutional domains and 24 EU language markets. He published peer-reviewed academic research on the methodology and rebuilt that paper as a <strong>vibe-coded interactive web experience</strong>. For EA's challenge of making Help content discoverable and citable across ChatGPT, Gemini, and Bing Copilot, this is precisely the practitioner profile the role requires.
+      </div>
+      <div class="g-ai-sources">
+        <a class="g-ai-source-chip" href="https://714go.github.io/experience/ecb.html" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#4285F4;flex-shrink:0;"></span>
+          ECB GEO Case Study
+        </a>
+        <a class="g-ai-source-chip" href="https://orcid.org/0009-0004-1927-5925" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#34A853;flex-shrink:0;"></span>
+          Published Research
+        </a>
+        <a class="g-ai-source-chip" href="https://marketingautomation.lovable.app" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#FBBC05;flex-shrink:0;"></span>
+          Interactive Research Site
+        </a>
+      </div>
+    </div>
+
+    <!-- SOUTH AFRICAN CALLOUT -->
+    <div class="g-sa-box">
+      <div class="g-sa-label">🇿🇦 South African — Actively Relocating to Ireland</div>
+      <div class="g-sa-text">
+        Tiago is South African and actively relocating to Ireland — one of the most well-represented and highly regarded migrant communities in the country. South Africans bring a professional reputation for work ethic, adaptability, and cultural range that is well known to Irish hiring teams. He holds full EU working rights through Portuguese citizenship, meaning no visa sponsorship or immigration complexity. He is moving toward Ireland with intent, not applying speculatively from across the world.
+      </div>
+    </div>
+
+    <!-- FEATURED -->
+    <div class="g-featured">
+      <div class="g-featured-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#70757a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Featured result
+      </div>
+      <div class="g-featured-content">
+        Tiago Barros is a search strategist and GEO specialist with 6+ years making content discoverable and citable across traditional search engines and AI platforms. He owns the full technical and content search improvement cycle — from Core Web Vitals and schema implementation to AI answerability QA, E-E-A-T improvements, and structured data enhancements. He translates requirements into technical documentation, partners with development and WebOps teams on delivery, and monitors performance against defined KPIs. His ECB GEO build is the clearest demonstration: enterprise-scale AI visibility strategy, built from zero, deployed across three institutional domains, and published as academic research.
+      </div>
+      <div class="g-featured-source">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div style="font-size:13px;color:#202124;">714go.github.io</div>
+          <a href="https://714go.github.io" target="_blank">714go.github.io — Full Portfolio →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT 1 -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Digital Portfolio</div>
+          <div class="g-result-source-url">714go.github.io</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io" target="_blank">Tiago Barros — Search Strategist, GEO & AI Visibility | South African, Ireland-Bound</a>
+      <p class="g-result-snippet">
+        <span class="g-date">Updated 2025 —</span>
+        6+ years making content discoverable across traditional search and AI platforms. Built the ECB's first GEO framework from scratch across <strong>three institutional domains and 24 EU languages</strong>. Technical SEO stack: Screaming Frog, SEMrush, Ahrefs, GA4, GSC, Looker Studio. Structured data, schema, Core Web Vitals, E-E-A-T, AI answerability. South African, actively relocating to Ireland. Full EU working rights.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io</span>
+        <span>📅 Last updated 2025</span>
+        <span>🏷 GEO · Technical SEO · AI Discoverability · Schema · E-E-A-T</span>
+      </div>
+      <div class="g-sitelinks">
+        <a class="g-sitelink" href="https://714go.github.io/experience/ecb.html" target="_blank">↗ ECB GEO & Technical SEO Case Study</a>
+        <a class="g-sitelink" href="https://orcid.org/0009-0004-1927-5925" target="_blank">↗ Published Research</a>
+        <a class="g-sitelink" href="https://marketingautomation.lovable.app" target="_blank">↗ Interactive Research Site</a>
+        <a class="g-sitelink" href="https://www.behance.net/tiagodebarros1" target="_blank">↗ Design Portfolio</a>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 2 - ECB -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Case Study</div>
+          <div class="g-result-source-url">714go.github.io › experience › ecb</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io/experience/ecb.html" target="_blank">European Central Bank — GEO, Technical SEO & AI Answerability, Frankfurt</a>
+      <p class="g-result-snippet">
+        Built the ECB's first AI visibility and GEO strategy from scratch with no existing playbook. Monitored Core Web Vitals and site health. Recommended, coordinated, and validated schema enhancements with WebOps and IT. Ran regular SEO audits flagging blockers to indexing, rendering, and AI parsing. QA'd content structure for AI answerability, heading hierarchy, TL;DRs, and FAQs. Applied E-E-A-T principles across three institutional domains. Translated requirements into developer-ready tickets via Jira. Automated reporting workflows. Tracked off-page link health and competitive AI citation patterns.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io/experience/ecb.html</span>
+        <span>📅 Role period ending 07/2024</span>
+        <span>🏷 GEO Build · Schema · AI Answerability · E-E-A-T · Technical SEO · WebOps Partnership</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 3 - Interactive research -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon" style="background:#FBBC05;color:#202124;">L</div>
+        <div>
+          <div class="g-result-source">Lovable — AI-Assisted Build</div>
+          <div class="g-result-source-url">marketingautomation.lovable.app</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://marketingautomation.lovable.app" target="_blank">Marketing Automation: Innovations & Opportunities — Interactive Research Site</a>
+      <p class="g-result-snippet">
+        Published academic paper rebuilt as an interactive, gamified web experience using AI-assisted vibe coding. This is the AI formatting playbook in practice — content structured for human engagement and AI citation simultaneously, with FAQ architecture, clear heading hierarchy, and semantic content designed to surface in AI-generated answers. Not a theory. A shipped product available for inspection right now.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 marketingautomation.lovable.app</span>
+        <span>📅 Published 2026 (source paper) — interactive build 2025</span>
+        <span>🏷 AI Formatting · GEO Playbook · Built & Shipped</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- PAA -->
+    <div class="paa-section">
+      <h2 class="paa-title">People also ask</h2>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Can Tiago QA Help content for AI answerability — headings, TL;DRs, FAQs — not just for traditional SEO?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes, and this is one of his most directly transferable credentials for this role. At the ECB he developed and owned an AI formatting playbook that defined how institutional content should be structured for AI citation — heading hierarchy, FAQ sections, semantic markup, entity clarity, and TL;DR-style summary formats that AI systems can surface directly in generated answers. He QA'd content against these standards across three institutional domains before deployment. EA's requirement to QA Help content for AI answerability is the exact same operational discipline applied to a player support context rather than a financial regulation one.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — AI Formatting & Content QA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Does Tiago translate SEO and AI visibility requirements into technical documentation for WebOps and IT teams?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes. At the ECB this was a core daily function — translating SEO, structured data, and GEO requirements into Jira tickets with defined acceptance criteria, partnering with IT and development teams to drive delivery, and QA-ing implementations before they reached production. He was not a passive advisory function; he owned the ticket, tracked it through to delivery, and validated the output. EA's requirement to lead the translation of search and AI visibility requirements into BRDs, user stories, and tickets is a description of work he has already been doing for six years.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — Technical Documentation & WebOps</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Has Tiago monitored competitor AI citations and analyzed how rivals appear in AI-generated responses?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes. At the ECB he monitored how competitor institutional content — other central banks, academic sources, financial journalism — was being cited in AI-generated responses about monetary policy and financial regulation. He used this competitive intelligence to identify gaps in ECB content structure and entity coverage, then prioritised improvements based on what rival content was doing that ECB content was not. EA's requirement to analyse competitor citations in AI platforms — Reddit, creators, wikis — and use those insights to inform Help visibility strategy is the same analytical discipline applied to a gaming support context.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-green" style="width:14px;height:14px;font-size:9px;">R</div>
+            <a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID — GEO Research Methodology</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Is Tiago actually moving to Ireland, or is this a speculative application from South Africa?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            This is a genuine relocation, not a speculative click. Tiago is South African, holds Portuguese citizenship and full EU working rights, and is actively targeting Ireland as part of a deliberate move to Europe. Ireland is one of the most established destinations for South African professionals globally, with a community and professional reputation that anyone who has hired in Dublin or Cork will recognise immediately. He does not need visa sponsorship, immigration processing, or a waiting period. He can start work in Ireland without bureaucratic delay.
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Does Tiago actually play games? Does he understand the EA player audience?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes. The question of whether a search strategist understands the audience they are optimising for is a fair one. Tiago's background includes genuine interest in sports, music, and digital culture — the same cultural territory EA's player base occupies. He understands the difference between writing for a player who is frustrated at 11pm trying to fix a connection issue and writing for a financial regulator reviewing policy documents, and he knows which one requires shorter sentences, clearer headings, and an answer in the first paragraph. EA Help content serves the first type of reader. That requires someone who can think like a player while writing like a strategist.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 4 - ORCID -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-green">R</div>
+        <div>
+          <div class="g-result-source">ORCID Research Profile</div>
+          <div class="g-result-source-url">orcid.org › 0009-0004-1927-5925</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://orcid.org/0009-0004-1927-5925" target="_blank">Tiago de Barros — ORCID | Published Research, GEO & AI-Driven Marketing</a>
+      <p class="g-result-snippet">
+        <strong>Dabić, M., de Barros, T.S., Vlačić, B. (2026).</strong> Marketing Automation: Innovations and Opportunities. Encyclopedia of Artificial Intelligence in Marketing. The peer-reviewed research that documents the GEO and AI answerability methodology he built and deployed at the ECB.
+        <strong>de la Roche, C., de Barros, T., et al. (2022).</strong> Consumer Perceptions of Email and Social Media Marketing. International Review of Management and Marketing, 12(4), 29–37.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 orcid.org/0009-0004-1927-5925</span>
+        <span>📅 2022, 2026</span>
+        <span>🏷 Peer-reviewed · GEO Methodology · AI Search</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 5 - LinkedIn -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">in</div>
+        <div>
+          <div class="g-result-source">LinkedIn</div>
+          <div class="g-result-source-url">linkedin.com › in › barros-tiago-</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://linkedin.com/in/barros-tiago-/" target="_blank">Tiago Barros — Search Strategist, GEO & AI Visibility | LinkedIn</a>
+      <p class="g-result-snippet">
+        6+ years across technical SEO, GEO, and AI search strategy. ECB institutional alumni across 24 EU languages. Semrush Technical SEO and AI Search Essentials certified. Ahrefs certified. Published in the Encyclopedia of Artificial Intelligence in Marketing (2026). <strong>South African — actively relocating to Ireland. Full EU working rights.</strong> Master of Marketing, magna cum laude, Católica Porto Business School.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 linkedin.com/in/barros-tiago-</span>
+        <span>📅 Profile active</span>
+        <span>🏷 Connections · Certifications · Publications</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 6 - Behance -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">Be</div>
+        <div>
+          <div class="g-result-source">Behance</div>
+          <div class="g-result-source-url">behance.net › tiagodebarros1</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.behance.net/tiagodebarros1" target="_blank">Tiago de Barros — Design & Visual Portfolio | Behance</a>
+      <p class="g-result-snippet">
+        Visual communication and brand design work. Relevant because EA Help content that is well-structured for AI answerability is also well-structured visually — heading hierarchy, whitespace, and information architecture are design problems as much as SEO ones. Tiago brings both instincts to the same problem.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 behance.net/tiagodebarros1</span>
+        <span>📅 Portfolio active</span>
+        <span>🏷 Brand Design · Editorial · Visual Identity</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 7 - Strava -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon" style="background:#FC4C02;">S</div>
+        <div>
+          <div class="g-result-source">Strava</div>
+          <div class="g-result-source-url">strava.com › athletes › 67746291</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.strava.com/athletes/67746291" target="_blank">Tiago Barros — Strava | South African Runner in Europe</a>
+      <p class="g-result-snippet">
+        EA builds entertainment that keeps players coming back. The people who build the best digital experiences for players tend to be the ones who understand commitment, consistency, and tracking performance over time. Someone who monitors their own data and shows up regardless of conditions will do the same with a 90-day search performance window.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 strava.com/athletes/67746291</span>
+        <span>📅 Active</span>
+        <span>🏷 Running · Consistency · Data-Driven</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KNOWLEDGE PANEL -->
+  <aside class="g-kp">
+    <div class="g-kp-image">
+      <img src="data:image/jpeg;base64,PHOTO_BASE64_PLACEHOLDER" alt="Tiago Barros" />
+    </div>
+    <div class="g-kp-body">
+      <div class="g-kp-name">Tiago Barros</div>
+      <div class="g-kp-type">Search Strategist & GEO Practitioner</div>
+      <div class="g-kp-desc">
+        6+ years making content discoverable across traditional search and AI platforms. Built ECB's first GEO framework. Published AI marketing researcher. South African actively relocating to Ireland, with full EU working rights.
+      </div>
+      <div class="g-kp-row"><span class="g-kp-label">Background</span><span class="g-kp-value"><span class="g-kp-sa-tag">🇿🇦 South African → Ireland</span></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Rights</span><span class="g-kp-value">Full EU working rights · No sponsorship needed</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Languages</span><span class="g-kp-value">English (native C1+) · Portuguese (B2) · Dutch (A2)</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Education</span><span class="g-kp-value">MSc Marketing, magna cum laude (Masters) — Católica Porto Business School</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Also</span><span class="g-kp-value">BCom Honours, Business Sciences/Marketing — University of the Witwatersrand</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Research</span><span class="g-kp-value"><a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID 0009-0004-1927-5925</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Email</span><span class="g-kp-value"><a href="mailto:tiagodb3@gmail.com">tiagodb3@gmail.com</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Certs</span><span class="g-kp-value">
+        <span class="g-kp-tag">Semrush AI Search</span>
+        <span class="g-kp-tag">Ahrefs</span>
+        <span class="g-kp-tag">GA4</span>
+        <span class="g-kp-tag">DMI</span>
+      </span></div>
+      <div class="g-kp-socials">
+        <a class="g-kp-social-btn" href="https://714go.github.io" target="_blank">🌐 Portfolio</a>
+        <a class="g-kp-social-btn" href="https://marketingautomation.lovable.app" target="_blank">✨ Research</a>
+        <a class="g-kp-social-btn" href="https://linkedin.com/in/barros-tiago-/" target="_blank">in LinkedIn</a>
+        <a class="g-kp-social-btn" href="https://orcid.org/0009-0004-1927-5925" target="_blank">◎ ORCID</a>
+        <a class="g-kp-social-btn" href="https://www.behance.net/tiagodebarros1" target="_blank">Be Behance</a>
+        <a class="g-kp-social-btn" href="https://www.strava.com/athletes/67746291" target="_blank">🏃 Strava</a>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<script>
+function togglePAA(el) {
+  const answer = el.nextElementSibling;
+  const chevron = el.querySelector('.paa-chevron');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.paa-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.paa-chevron').forEach(c => c.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('open'); chevron.classList.add('open'); }
+}
+</script>
+</body>
+</html>
