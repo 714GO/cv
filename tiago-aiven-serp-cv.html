@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tiago Barros — Aiven SEO / AEO Specialist</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: arial, sans-serif; background: #fff; color: #202124; font-size: 14px; line-height: 1.58; }
+
+  .g-header { border-bottom: 1px solid #ebebeb; padding: 16px 0 0; position: sticky; top: 0; background: #fff; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+  .g-header-inner { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  .g-logo { font-size: 28px; font-weight: 400; letter-spacing: -1px; margin-bottom: 12px; display: inline-block; text-decoration: none; }
+  .g-logo .g-b { color: #4285F4; } .g-logo .g-r { color: #EA4335; }
+  .g-logo .g-y { color: #FBBC05; } .g-logo .g-gb { color: #4285F4; }
+  .g-logo .g-gr { color: #34A853; } .g-logo .g-ge { color: #EA4335; }
+
+  .g-search-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .g-search-box { display: flex; align-items: center; border: 1px solid #dfe1e5; border-radius: 24px; padding: 9px 18px 9px 22px; width: 660px; max-width: 100%; transition: box-shadow .15s; }
+  .g-search-box:hover { box-shadow: 0 1px 8px rgba(32,33,36,.28); border-color: rgba(223,225,229,0); }
+  .g-search-input { flex: 1; border: none; outline: none; font-size: 16px; color: #202124; font-family: arial, sans-serif; background: transparent; }
+  .g-search-icons { color: #9aa0a6; }
+
+  .g-nav { display: flex; font-size: 13px; color: #70757a; border-top: 1px solid #ebebeb; margin-top: 4px; overflow-x: auto; }
+  .g-nav-item { padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 6px; border-bottom: 3px solid transparent; color: #70757a; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .g-nav-item.active { color: #1a73e8; border-bottom-color: #1a73e8; }
+  .g-nav-item:hover { color: #202124; background: #f8f9fa; }
+
+  .g-body { max-width: 1080px; margin: 0 auto; padding: 24px 24px 80px; display: grid; grid-template-columns: 1fr 340px; gap: 48px; }
+
+  .g-result-count { font-size: 13px; color: #70757a; margin-bottom: 18px; }
+  .g-result-count span { color: #202124; }
+  .g-tools { font-size: 13px; color: #70757a; margin-bottom: 22px; display: flex; gap: 18px; flex-wrap: wrap; }
+
+  /* AI OVERVIEW */
+  .g-ai-overview { background: linear-gradient(135deg, #EEF2FF 0%, #F0F7FF 100%); border: 1px solid #C7D7FA; border-radius: 12px; padding: 18px 22px; margin-bottom: 28px; max-width: 680px; }
+  .g-ai-label { font-size: 12px; font-weight: 700; color: #1a73e8; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; letter-spacing: .5px; text-transform: uppercase; }
+  .g-ai-content { font-size: 14px; color: #202124; line-height: 1.72; }
+  .g-ai-content strong { color: #1a0dab; }
+  .g-ai-sources { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .g-ai-source-chip { display: flex; align-items: center; gap: 6px; border: 1px solid #C7D7FA; border-radius: 20px; padding: 4px 12px; font-size: 12px; color: #1a0dab; text-decoration: none; background: #fff; transition: background .15s; }
+  .g-ai-source-chip:hover { background: #EEF2FF; text-decoration: underline; }
+
+  /* CALLOUT BOXES */
+  .g-sa-box { background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%); border: 1px solid #ffe082; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; max-width: 680px; }
+  .g-sa-label { font-size: 12px; font-weight: 700; color: #e65100; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .g-sa-text { font-size: 13px; color: #4e342e; line-height: 1.65; }
+
+  .g-pt-box { background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%); border: 1px solid #a5d6a7; border-radius: 10px; padding: 14px 18px; margin-bottom: 28px; max-width: 680px; }
+  .g-pt-label { font-size: 12px; font-weight: 700; color: #2e7d32; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .g-pt-text { font-size: 13px; color: #1b5e20; line-height: 1.65; }
+
+  /* FEATURED */
+  .g-featured { border: 1px solid #dfe1e5; border-radius: 12px; padding: 20px 24px; margin-bottom: 28px; max-width: 680px; background: linear-gradient(135deg, #fafbff 0%, #fff 100%); }
+  .g-featured-label { font-size: 12px; color: #70757a; margin-bottom: 10px; display: flex; align-items: center; gap: 4px; font-weight: 500; }
+  .g-featured-content { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .g-featured-source { display: flex; align-items: center; gap: 10px; font-size: 13px; padding-top: 12px; border-top: 1px solid #ebebeb; }
+  .g-featured-source a { color: #1a0dab; text-decoration: none; font-weight: 500; }
+  .g-featured-source a:hover { text-decoration: underline; }
+
+  /* RESULTS */
+  .g-result { margin-bottom: 32px; }
+  .g-result-url-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .g-favicon { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .fav-blue   { background: #4285F4; }
+  .fav-green  { background: #34A853; }
+  .fav-dark   { background: #202124; }
+  .fav-aiven  { background: #FF4500; }
+
+  .g-result-source { font-size: 14px; color: #202124; line-height: 1.4; }
+  .g-result-source-url { font-size: 12px; color: #70757a; }
+  .g-result-title { font-size: 20px; font-weight: 400; color: #1a0dab; line-height: 1.3; cursor: pointer; text-decoration: none; display: block; margin-bottom: 5px; }
+  .g-result-title:hover { text-decoration: underline; }
+  .g-result-title:visited { color: #681da8; }
+  .g-result-snippet { font-size: 14px; color: #4d5156; line-height: 1.62; max-width: 660px; margin-bottom: 8px; }
+  .g-result-snippet strong { color: #202124; font-weight: 700; }
+  .g-date { font-size: 14px; color: #70757a; margin-right: 4px; }
+  .g-result-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: #70757a; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ebebeb; max-width: 660px; }
+
+  .g-sitelinks { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 28px; margin-top: 12px; max-width: 600px; }
+  .g-sitelink { font-size: 14px; color: #1a0dab; text-decoration: none; display: flex; align-items: center; gap: 4px; padding: 5px 0; border-top: 1px solid #ebebeb; }
+  .g-sitelink:hover { text-decoration: underline; padding-left: 4px; }
+
+  .g-divider { border: none; border-top: 1px solid #ebebeb; margin: 24px 0; }
+
+  /* PAA */
+  .paa-section { margin-bottom: 32px; max-width: 680px; }
+  .paa-title { font-size: 20px; font-weight: 400; color: #202124; margin-bottom: 14px; }
+  .paa-item { border: 1px solid #dfe1e5; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .paa-question { display: flex; justify-content: space-between; align-items: center; padding: 15px 18px; cursor: pointer; font-size: 15px; color: #202124; background: #fff; user-select: none; }
+  .paa-question:hover { background: #f8f9fa; }
+  .paa-chevron { flex-shrink: 0; width: 22px; height: 22px; color: #70757a; transition: transform .2s; }
+  .paa-chevron.open { transform: rotate(180deg); }
+  .paa-answer { display: none; border-top: 1px solid #ebebeb; padding: 18px; background: #fafafa; }
+  .paa-answer.open { display: block; }
+  .paa-answer-text { font-size: 14px; color: #202124; line-height: 1.7; margin-bottom: 14px; }
+  .paa-answer-source { display: flex; align-items: center; gap: 8px; font-size: 13px; padding-top: 10px; border-top: 1px solid #ebebeb; }
+  .paa-answer-source a { color: #1a0dab; text-decoration: none; }
+  .paa-answer-source a:hover { text-decoration: underline; }
+
+  /* KNOWLEDGE PANEL */
+  .g-kp { border: 1px solid #dfe1e5; border-radius: 12px; overflow: hidden; font-size: 14px; align-self: start; position: sticky; top: 104px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .g-kp-image { width: 100%; height: 220px; background: #e8eaed; overflow: hidden; }
+  .g-kp-image img { width: 100%; height: 100%; object-fit: cover; }
+  .g-kp-body { padding: 18px; }
+  .g-kp-name { font-size: 24px; font-weight: 400; color: #202124; margin-bottom: 2px; }
+  .g-kp-type { font-size: 14px; color: #70757a; margin-bottom: 14px; }
+  .g-kp-desc { font-size: 13px; color: #4d5156; line-height: 1.6; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #ebebeb; }
+  .g-kp-row { display: flex; gap: 8px; margin-bottom: 9px; font-size: 13px; }
+  .g-kp-label { color: #70757a; min-width: 80px; flex-shrink: 0; font-weight: 500; }
+  .g-kp-value { color: #202124; }
+  .g-kp-value a { color: #1a0dab; text-decoration: none; }
+  .g-kp-value a:hover { text-decoration: underline; }
+  .g-kp-tag { display: inline-block; background: #e8f0fe; color: #1a73e8; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-sa-tag { display: inline-block; background: #fff8e1; color: #e65100; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-pt-tag { display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin: 2px 2px 0 0; font-weight: 600; }
+  .g-kp-socials { display: flex; gap: 8px; padding-top: 14px; border-top: 1px solid #ebebeb; margin-top: 10px; flex-wrap: wrap; }
+  .g-kp-social-btn { border: 1px solid #dfe1e5; border-radius: 20px; padding: 7px 14px; font-size: 12px; color: #1a0dab; text-decoration: none; transition: background .15s; font-weight: 500; }
+  .g-kp-social-btn:hover { background: #f8f9fa; text-decoration: underline; }
+
+  @media (max-width: 820px) {
+    .g-body { grid-template-columns: 1fr; }
+    .g-kp { display: none; }
+    .g-search-box { width: 100%; }
+    .g-sitelinks { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="g-header">
+  <div class="g-header-inner">
+    <a class="g-logo" href="#">
+      <span class="g-b">G</span><span class="g-r">o</span><span class="g-y">o</span><span class="g-gb">g</span><span class="g-gr">l</span><span class="g-ge">e</span>
+    </a>
+    <div class="g-search-row">
+      <div class="g-search-box">
+        <input class="g-search-input" type="text" value="Tiago Barros SEO AEO Specialist LLM citation RAG Aiven Ireland" readonly />
+        <div class="g-search-icons">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+      </div>
+    </div>
+    <nav class="g-nav">
+      <a class="g-nav-item active" href="#">All</a>
+      <a class="g-nav-item" href="https://714go.github.io" target="_blank">Portfolio</a>
+      <a class="g-nav-item" href="https://marketingautomation.lovable.app" target="_blank">✨ Research</a>
+      <a class="g-nav-item" href="https://linkedin.com/in/barros-tiago-/" target="_blank">LinkedIn</a>
+      <a class="g-nav-item" href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID</a>
+      <a class="g-nav-item" href="https://www.behance.net/tiagodebarros1" target="_blank">Behance</a>
+      <a class="g-nav-item" href="https://www.strava.com/athletes/67746291" target="_blank">Strava</a>
+    </nav>
+  </div>
+</header>
+
+<main class="g-body">
+  <div class="g-main">
+
+    <p class="g-result-count">About <span>7 results</span> (0.26 seconds) for Tiago Barros — SEO / AEO Specialist, Aiven Ireland</p>
+
+    <div class="g-tools">
+      <span>🇿🇦 South African actively relocating to Ireland</span>
+      <span>🇵🇹 Portuguese citizen — EU work permit confirmed</span>
+      <span>🤖 Built ECB GEO framework — llms.txt, RAG, structured data</span>
+      <span>📚 Published AI marketing researcher</span>
+    </div>
+
+    <!-- AI OVERVIEW -->
+    <div class="g-ai-overview">
+      <div class="g-ai-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        AI Overview
+      </div>
+      <div class="g-ai-content">
+        Tiago Barros is one of a small number of practitioners who has built an <strong>Answer Engine Optimisation (AEO) and GEO strategy from scratch at institutional scale</strong>, deployed it across three domains and 24 EU language markets at the European Central Bank, and <strong>published peer-reviewed academic research on the methodology</strong>. He manages llms.txt frameworks, monitors Share of Model Voice and AI Citation Frequency daily across ChatGPT, Perplexity, Gemini, and Claude, and has implemented structured data and knowledge graph architecture to make institutional content machine-readable. For Aiven's mission to become the primary source of truth in AI-generated answers about open source data infrastructure, he is the practitioner profile the role is describing.
+      </div>
+      <div class="g-ai-sources">
+        <a class="g-ai-source-chip" href="https://714go.github.io/experience/ecb.html" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#4285F4;flex-shrink:0;"></span>
+          ECB AEO/GEO Build — Case Study
+        </a>
+        <a class="g-ai-source-chip" href="https://orcid.org/0009-0004-1927-5925" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#34A853;flex-shrink:0;"></span>
+          Published Research — ORCID
+        </a>
+        <a class="g-ai-source-chip" href="https://marketingautomation.lovable.app" target="_blank">
+          <span style="width:12px;height:12px;border-radius:50%;background:#FBBC05;flex-shrink:0;"></span>
+          Interactive Research Site
+        </a>
+      </div>
+    </div>
+
+    <!-- SA CALLOUT -->
+    <div class="g-sa-box">
+      <div class="g-sa-label">🇿🇦 South African — Actively Relocating to Ireland</div>
+      <div class="g-sa-text">Tiago is South African and actively relocating to Ireland, one of the most established and highly regarded migrant communities in the country. He holds Portuguese citizenship and full EU working rights — no visa sponsorship required. Ireland is a deliberate destination, not a speculative application.</div>
+    </div>
+
+    <!-- PT CALLOUT -->
+    <div class="g-pt-box">
+      <div class="g-pt-label">🇵🇹 Portuguese Citizen — EU Work Permit Confirmed</div>
+      <div class="g-pt-text">Full unrestricted EU working rights. Can begin work in Ireland immediately without immigration delay or bureaucratic friction of any kind.</div>
+    </div>
+
+    <!-- FEATURED -->
+    <div class="g-featured">
+      <div class="g-featured-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#70757a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Featured result
+      </div>
+      <div class="g-featured-content">
+        Tiago Barros is a technical SEO and AEO specialist with 6+ years owning search strategy across both traditional search engines and AI answer engines. He built the European Central Bank's first GEO and AEO framework from scratch — implementing llms.txt, robots.txt for AI crawlers, structured data and Schema.org knowledge graph architecture, and RAG-optimised content workflows — across three institutional domains and 24 EU language markets. He monitors AI Citation Frequency and Share of Model Voice daily as a working practice. He published peer-reviewed academic research on the methodology. He does not wait for a playbook. He built the one that didn't exist.
+      </div>
+      <div class="g-featured-source">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div style="font-size:13px;color:#202124;">714go.github.io</div>
+          <a href="https://714go.github.io" target="_blank">714go.github.io — Full Portfolio & AEO Case Study →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT 1 -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Digital Portfolio</div>
+          <div class="g-result-source-url">714go.github.io</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io" target="_blank">Tiago Barros — SEO / AEO Specialist | llms.txt · RAG · Schema · AI Citation | South African → Ireland</a>
+      <p class="g-result-snippet">
+        <span class="g-date">Updated 2025 —</span>
+        6+ years owning traditional SEO and AI answer engine optimisation. Built ECB's first AEO/GEO framework from scratch — llms.txt, robots.txt for AI crawlers, JSON-LD and Schema.org knowledge graph, RAG-optimised content. <strong>24 official EU language markets.</strong> Monitors Share of Model Voice and AI Citation Frequency daily across ChatGPT, Perplexity, Gemini, and Claude. Published peer-reviewed academic researcher. South African, Portuguese citizen, relocating to Ireland.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io</span>
+        <span>📅 Last updated 2025</span>
+        <span>🏷 AEO · GEO · Technical SEO · LLM Citation · Schema · RAG</span>
+      </div>
+      <div class="g-sitelinks">
+        <a class="g-sitelink" href="https://714go.github.io/experience/ecb.html" target="_blank">↗ ECB AEO/GEO Build — Case Study</a>
+        <a class="g-sitelink" href="https://orcid.org/0009-0004-1927-5925" target="_blank">↗ Published Research — ORCID</a>
+        <a class="g-sitelink" href="https://marketingautomation.lovable.app" target="_blank">↗ Interactive Research Site</a>
+        <a class="g-sitelink" href="https://www.behance.net/tiagodebarros1" target="_blank">↗ Design Portfolio</a>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 2 - ECB -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Case Study</div>
+          <div class="g-result-source-url">714go.github.io › experience › ecb</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io/experience/ecb.html" target="_blank">European Central Bank — AEO/GEO Framework Built From Scratch | llms.txt · Knowledge Graph · AI Citation</a>
+      <p class="g-result-snippet">
+        Built the ECB's first Answer Engine Optimisation and Generative Engine Optimisation framework with no existing playbook. Implemented llms.txt and robots.txt configurations for AI crawlers. Architected JSON-LD and Schema.org structured data knowledge graph enabling AI agents and search bots to explicitly understand institutional content, entities, and authority signals. Optimised content architecture for RAG workflows. Monitored AI Citation Frequency and Share of Model Voice across ChatGPT, Gemini, Perplexity, and Claude. Drove site architecture, Core Web Vitals, and JavaScript rendering improvements across three high-traffic institutional domains.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io/experience/ecb.html</span>
+        <span>📅 Role period July 2024 – June 2025</span>
+        <span>🏷 AEO · llms.txt · RAG · Knowledge Graph · Schema.org · Share of Model Voice</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 3 - Interactive research -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon" style="background:#FBBC05;color:#202124;">L</div>
+        <div>
+          <div class="g-result-source">Lovable — Interactive Research Build</div>
+          <div class="g-result-source-url">marketingautomation.lovable.app</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://marketingautomation.lovable.app" target="_blank">Marketing Automation: Innovations & Opportunities — AEO-Optimised Interactive Research Site</a>
+      <p class="g-result-snippet">
+        Tiago's published academic paper, rebuilt as an interactive web experience using AI-assisted vibe coding. The site is itself an AEO experiment — structured for RAG consumption, entity-rich, with FAQ architecture, semantic headings, and clear attribution signals designed to maximise AI citation frequency. It is not a paper about AEO. It is an AEO-optimised artefact built around a paper.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 marketingautomation.lovable.app</span>
+        <span>📅 Published 2026 (source paper) — interactive build 2025</span>
+        <span>🏷 AEO Experiment · RAG Architecture · AI Citation · Built & Shipped</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- PAA -->
+    <div class="paa-section">
+      <h2 class="paa-title">People also ask</h2>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Does Tiago have hands-on experience with llms.txt, robots.txt for AI crawlers, and RAG-optimised content architecture?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes, implemented in production at institutional scale. At the ECB he configured llms.txt and robots.txt directives specifically for AI crawler management, determining which content large language models should index and cite and how retrieval systems should prioritise and attribute institutional information. He optimised content architecture for RAG workflows — clear entity definitions, consistent semantic markup, structured FAQ formats, and explicit authority signals — designed to maximise the accuracy and frequency with which ECB content was surfaced in AI-generated responses. The methodology was subsequently published as peer-reviewed academic research.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — AEO/GEO Framework</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Can Tiago measure Share of Model Voice and AI Citation Frequency and connect them to pipeline?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes. He monitors Share of Model Voice and AI Citation Frequency daily as a working practice — running systematic prompt sets across ChatGPT, Perplexity, Gemini, and Claude to measure how often and how accurately a brand appears in AI-generated answers, and tracking whether citation accuracy improves when content architecture changes are deployed. At the ECB this monitoring directly informed which content needed restructuring to strengthen entity signals and improve RAG retrieval. Connecting this to Aiven's enterprise trial pipeline requires integrating AI citation data with CRM attribution — a logical extension of measurement infrastructure he has already built.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-green" style="width:14px;height:14px;font-size:9px;">R</div>
+            <a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID — Published Research, AEO Measurement</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Does Tiago have expert knowledge of JSON-LD, Schema.org, and knowledge graph architecture for AI and search?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Yes. He designed and implemented JSON-LD and Schema.org structured data across three institutional ECB domains, building the machine-readable knowledge graph that allowed AI agents and search bots to explicitly understand the ECB's institutional entities, policy domains, publications, and authority relationships. The implementation covered Organisation, BreadcrumbList, Article, FAQPage, and custom entity schemas, coordinated with development teams through defined Jira requirements and validated before production deployment. This is the exact architecture Aiven needs to make its product features, pricing, and technical benchmarks legible to AI systems.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:9px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — Schema & Knowledge Graph</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Does Tiago pivot strategy fast when LLM and search algorithms change, or does he wait for a playbook?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            He built the playbook that didn't exist. When he arrived at the ECB there was no GEO framework, no AEO strategy, no llms.txt configuration, and no monitoring infrastructure for how institutional content appeared in AI-generated answers. He identified the problem before it was on anyone's agenda, designed the framework, built the monitoring infrastructure, implemented the technical changes, and published the methodology academically. That is not someone who waits for a playbook. That is someone who identifies that one is needed and builds it before competitors do.
+          </div>
+          <div class="paa-answer-source">
+            <div class="g-favicon" style="width:14px;height:14px;font-size:9px;background:#FBBC05;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#202124;">L</div>
+            <a href="https://marketingautomation.lovable.app" target="_blank">marketingautomation.lovable.app — Built & Shipped</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Is Tiago genuinely relocating to Ireland or is this a speculative application?</span>
+          <svg class="paa-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">
+            Genuine relocation. Tiago is South African with Portuguese citizenship and is actively targeting Ireland as a destination. He holds full EU working rights with no immigration complexity. Ireland is one of the most established destinations for South African professionals globally, and he is applying with the intent to build a career in the country, not to test a remote-first arrangement from Johannesburg.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 4 - ORCID -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-green">R</div>
+        <div>
+          <div class="g-result-source">ORCID Research Profile</div>
+          <div class="g-result-source-url">orcid.org › 0009-0004-1927-5925</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://orcid.org/0009-0004-1927-5925" target="_blank">Tiago de Barros — Published Research | AEO, GEO & AI-Driven Marketing</a>
+      <p class="g-result-snippet">
+        <strong>Dabić, M., de Barros, T.S., Vlačić, B. (2026).</strong> Marketing Automation: Innovations and Opportunities. Encyclopedia of Artificial Intelligence in Marketing (Springer). The academic documentation of the AEO/GEO methodology built and deployed at the ECB.
+        <strong>de la Roche, C., de Barros, T., et al. (2022).</strong> Consumer Perceptions of Email and Social Media Marketing. International Review of Management and Marketing, 12(4), 29–37.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 orcid.org/0009-0004-1927-5925</span>
+        <span>📅 2022, 2026</span>
+        <span>🏷 Peer-reviewed · AEO Methodology · AI Marketing</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 5 - LinkedIn -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">in</div>
+        <div>
+          <div class="g-result-source">LinkedIn</div>
+          <div class="g-result-source-url">linkedin.com › in › barros-tiago-</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://linkedin.com/in/barros-tiago-/" target="_blank">Tiago Barros — SEO / AEO Specialist | LLM Citation · RAG · Knowledge Graph | LinkedIn</a>
+      <p class="g-result-snippet">
+        6+ years owning traditional SEO and AI answer engine optimisation. ECB institutional alumni across 24 EU languages. Semrush, Ahrefs certified. Published in the Encyclopedia of Artificial Intelligence in Marketing (2026). <strong>South African. Portuguese citizen. Relocating to Ireland. Full EU working rights.</strong> Master of Marketing, magna cum laude, Católica Porto Business School.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 linkedin.com/in/barros-tiago-</span>
+        <span>📅 Profile active</span>
+        <span>🏷 Connections · Certifications · Publications</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 6 - Behance -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">Be</div>
+        <div>
+          <div class="g-result-source">Behance</div>
+          <div class="g-result-source-url">behance.net › tiagodebarros1</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.behance.net/tiagodebarros1" target="_blank">Tiago de Barros — Design & Visual Portfolio | Behance</a>
+      <p class="g-result-snippet">
+        Visual communication and brand design work. Relevant because the best AEO and knowledge graph architecture is also information design — the way you structure entities, relationships, and semantic signals for machine consumption requires the same spatial and hierarchical instinct as visual design.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 behance.net/tiagodebarros1</span>
+        <span>📅 Portfolio active</span>
+        <span>🏷 Brand Design · Editorial · Information Architecture</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 7 - Strava -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon" style="background:#FC4C02;">S</div>
+        <div>
+          <div class="g-result-source">Strava</div>
+          <div class="g-result-source-url">strava.com › athletes › 67746291</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.strava.com/athletes/67746291" target="_blank">Tiago Barros — Strava | High-Velocity. Consistent. Data-Driven.</a>
+      <p class="g-result-snippet">
+        Aiven wants someone who thrives in an environment where search rules change weekly. The people who do that well are not the ones who work harder when things change — they are the ones who show up consistently when things are stable, track their own performance metrics obsessively, and treat every data point as feedback. This profile is that person.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 strava.com/athletes/67746291</span>
+        <span>📅 Active</span>
+        <span>🏷 Running · Consistency · Self-Measurement</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KNOWLEDGE PANEL -->
+  <aside class="g-kp">
+    <div class="g-kp-image">
+      <img src="data:image/jpeg;base64,PHOTO_BASE64_PLACEHOLDER" alt="Tiago Barros" />
+    </div>
+    <div class="g-kp-body">
+      <div class="g-kp-name">Tiago Barros</div>
+      <div class="g-kp-type">SEO / AEO Specialist</div>
+      <div class="g-kp-desc">Built ECB's first AEO/GEO framework — llms.txt, RAG optimisation, knowledge graph architecture across 24 EU languages. Published researcher. South African relocating to Ireland.</div>
+      <div class="g-kp-row"><span class="g-kp-label">Nationality</span><span class="g-kp-value"><span class="g-kp-sa-tag">🇿🇦 South African</span></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Citizenship</span><span class="g-kp-value"><span class="g-kp-pt-tag">🇵🇹 Portuguese — Full EU Rights</span></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Relocating</span><span class="g-kp-value">Actively moving to Ireland</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Languages</span><span class="g-kp-value">English (native C1+) · Portuguese (B2) · Dutch (A2)</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Education</span><span class="g-kp-value">MSc Marketing, magna cum laude — Católica Porto</span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Research</span><span class="g-kp-value"><a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID 0009-0004-1927-5925</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Email</span><span class="g-kp-value"><a href="mailto:tiagodb3@gmail.com">tiagodb3@gmail.com</a></span></div>
+      <div class="g-kp-row"><span class="g-kp-label">Certs</span><span class="g-kp-value">
+        <span class="g-kp-tag">Semrush AI Search</span>
+        <span class="g-kp-tag">Ahrefs</span>
+        <span class="g-kp-tag">GA4</span>
+        <span class="g-kp-tag">DMI</span>
+      </span></div>
+      <div class="g-kp-socials">
+        <a class="g-kp-social-btn" href="https://714go.github.io" target="_blank">🌐 Portfolio</a>
+        <a class="g-kp-social-btn" href="https://marketingautomation.lovable.app" target="_blank">✨ Research</a>
+        <a class="g-kp-social-btn" href="https://linkedin.com/in/barros-tiago-/" target="_blank">in LinkedIn</a>
+        <a class="g-kp-social-btn" href="https://orcid.org/0009-0004-1927-5925" target="_blank">◎ ORCID</a>
+        <a class="g-kp-social-btn" href="https://www.behance.net/tiagodebarros1" target="_blank">Be Behance</a>
+        <a class="g-kp-social-btn" href="https://www.strava.com/athletes/67746291" target="_blank">🏃 Strava</a>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<script>
+function togglePAA(el) {
+  const answer = el.nextElementSibling;
+  const chevron = el.querySelector('.paa-chevron');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.paa-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.paa-chevron').forEach(c => c.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('open'); chevron.classList.add('open'); }
+}
+</script>
+</body>
+</html>
