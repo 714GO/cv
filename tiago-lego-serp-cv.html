@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tiago Barros — LEGO SEO & GEO Manager</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --lego-yellow: #FFD700;
+    --lego-yellow-dark: #E6C200;
+    --lego-red: #E3000B;
+    --lego-blue: #006CB7;
+    --lego-blue-light: #0088E0;
+    --lego-black: #1A1A1A;
+    --lego-white: #FFFFFF;
+    --lego-grey: #F5F5F5;
+    --lego-grey-mid: #DDDDDD;
+    --lego-text: #2C2C2C;
+    --stud-size: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--lego-white);
+    color: var(--lego-text);
+    font-size: 14px;
+    line-height: 1.58;
+  }
+
+  /* ── STUD PATTERN ── */
+  .stud-row {
+    display: flex;
+    gap: 6px;
+    padding: 6px 8px;
+    background: var(--lego-yellow);
+  }
+  .stud {
+    width: var(--stud-size);
+    height: var(--stud-size);
+    background: var(--lego-yellow-dark);
+    border-radius: 50%;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.25), 0 1px 0 rgba(255,255,255,.4);
+    flex-shrink: 0;
+  }
+
+  /* ── HEADER ── */
+  .g-header {
+    border-bottom: 4px solid var(--lego-yellow);
+    position: sticky;
+    top: 0;
+    background: var(--lego-white);
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  }
+  .g-header-studs { background: var(--lego-yellow); }
+  .g-header-inner { max-width: 1080px; margin: 0 auto; padding: 12px 24px 0; }
+
+  .g-logo {
+    font-family: 'Nunito', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .logo-brick {
+    background: var(--lego-red);
+    color: var(--lego-white);
+    padding: 2px 7px 3px;
+    border-radius: 4px;
+    font-size: 22px;
+    box-shadow: 0 3px 0 #9A0007;
+    position: relative;
+    top: -1px;
+  }
+  .logo-brick::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 6px;
+    width: 9px;
+    height: 5px;
+    background: #C80008;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 14px 0 0 #C80008;
+  }
+  .logo-rest {
+    color: var(--lego-black);
+    font-size: 22px;
+  }
+  .logo-search { color: var(--lego-blue); }
+
+  .g-search-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .g-search-box {
+    display: flex;
+    align-items: center;
+    border: 3px solid var(--lego-black);
+    border-radius: 8px;
+    padding: 8px 14px;
+    width: 640px;
+    max-width: 100%;
+    background: var(--lego-white);
+    box-shadow: 3px 3px 0 var(--lego-black);
+    transition: box-shadow .15s;
+  }
+  .g-search-box:hover { box-shadow: 4px 4px 0 var(--lego-black); }
+  .g-search-input { flex: 1; border: none; outline: none; font-size: 15px; font-family: 'Inter', sans-serif; background: transparent; color: var(--lego-text); }
+  .g-search-btn {
+    background: var(--lego-yellow);
+    border: 3px solid var(--lego-black);
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--lego-black);
+    transition: all .1s;
+    color: var(--lego-black);
+  }
+  .g-search-btn:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--lego-black); }
+  .g-search-btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--lego-black); }
+
+  .g-nav { display: flex; font-size: 13px; border-top: 2px solid var(--lego-grey-mid); overflow-x: auto; }
+  .g-nav-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-bottom: 4px solid transparent;
+    color: #5f6368;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-weight: 500;
+    transition: all .1s;
+  }
+  .g-nav-item.active { color: var(--lego-blue); border-bottom-color: var(--lego-blue); font-weight: 700; }
+  .g-nav-item:hover { background: var(--lego-grey); color: var(--lego-text); }
+
+  /* ── BODY ── */
+  .g-body { max-width: 1080px; margin: 0 auto; padding: 24px 24px 80px; display: grid; grid-template-columns: 1fr 340px; gap: 48px; }
+
+  .g-result-count { font-size: 13px; color: #70757a; margin-bottom: 18px; }
+
+  .g-tools { font-size: 13px; color: #70757a; margin-bottom: 22px; display: flex; gap: 18px; flex-wrap: wrap; }
+
+  /* ── LEGO BRICK CARD ── */
+  .lego-card {
+    border: 3px solid var(--lego-black);
+    border-radius: 10px;
+    margin-bottom: 28px;
+    max-width: 680px;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 var(--lego-black);
+  }
+  .lego-card-header {
+    background: var(--lego-yellow);
+    padding: 10px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--lego-black);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lego-card-body { padding: 16px 18px; background: var(--lego-white); }
+
+  /* AI OVERVIEW */
+  .ai-card {
+    border: 3px solid var(--lego-blue);
+    border-radius: 10px;
+    margin-bottom: 28px;
+    max-width: 680px;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 var(--lego-blue);
+  }
+  .ai-card-header {
+    background: var(--lego-blue);
+    padding: 10px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--lego-white);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ai-card-body { padding: 16px 18px; background: #F0F7FF; font-size: 14px; line-height: 1.7; }
+  .ai-card-body strong { color: var(--lego-blue); font-weight: 700; }
+  .ai-sources { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .ai-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 2px solid var(--lego-blue);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--lego-blue);
+    text-decoration: none;
+    background: var(--lego-white);
+    font-weight: 600;
+    box-shadow: 2px 2px 0 var(--lego-blue);
+    transition: all .1s;
+  }
+  .ai-chip:hover { background: var(--lego-blue); color: var(--lego-white); transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--lego-blue); }
+
+  /* SA / PT CALLOUT */
+  .flag-box {
+    border: 3px solid var(--lego-black);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    max-width: 680px;
+    box-shadow: 3px 3px 0 var(--lego-black);
+  }
+  .flag-box.sa { background: #FFF8E1; border-color: #F57F17; box-shadow: 3px 3px 0 #F57F17; }
+  .flag-box.pt { background: #E8F5E9; border-color: #2E7D32; box-shadow: 3px 3px 0 #2E7D32; }
+  .flag-label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-bottom: 5px;
+  }
+  .flag-box.sa .flag-label { color: #E65100; }
+  .flag-box.pt .flag-label { color: #1B5E20; }
+  .flag-text { font-size: 13px; line-height: 1.6; }
+  .flag-box.sa .flag-text { color: #4E342E; }
+  .flag-box.pt .flag-text { color: #1B5E20; }
+
+  /* RESULTS */
+  .g-result { margin-bottom: 30px; }
+  .g-result-url-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .g-favicon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--lego-white);
+    flex-shrink: 0;
+    border: 2px solid rgba(0,0,0,.15);
+    font-family: 'Nunito', sans-serif;
+  }
+  .fav-blue  { background: var(--lego-blue); }
+  .fav-green { background: #34A853; }
+  .fav-dark  { background: var(--lego-black); }
+  .fav-red   { background: var(--lego-red); }
+
+  .g-result-source { font-size: 14px; color: var(--lego-text); line-height: 1.4; font-weight: 500; }
+  .g-result-source-url { font-size: 12px; color: #70757a; }
+
+  .g-result-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--lego-blue);
+    line-height: 1.3;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+    transition: color .1s;
+  }
+  .g-result-title:hover { color: var(--lego-red); text-decoration: underline; }
+
+  .g-result-snippet { font-size: 14px; color: #4d5156; line-height: 1.62; max-width: 660px; margin-bottom: 8px; }
+  .g-result-snippet strong { color: var(--lego-text); font-weight: 700; }
+  .g-date { font-size: 14px; color: #70757a; margin-right: 4px; }
+
+  .g-result-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    color: #70757a;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 2px dashed var(--lego-grey-mid);
+    max-width: 660px;
+  }
+  .g-result-meta span {
+    background: var(--lego-grey);
+    border: 1px solid var(--lego-grey-mid);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-weight: 500;
+  }
+
+  .g-sitelinks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; margin-top: 12px; max-width: 580px; }
+  .g-sitelink {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--lego-blue);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 10px;
+    border: 2px solid var(--lego-blue);
+    border-radius: 6px;
+    background: var(--lego-white);
+    box-shadow: 2px 2px 0 var(--lego-blue);
+    transition: all .1s;
+  }
+  .g-sitelink:hover { background: var(--lego-blue); color: var(--lego-white); transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--lego-blue); }
+
+  .g-divider { border: none; border-top: 3px solid var(--lego-grey-mid); margin: 24px 0; position: relative; }
+  .g-divider::after {
+    content: '🧱';
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--lego-white);
+    padding: 0 8px;
+    font-size: 14px;
+  }
+
+  /* PAA */
+  .paa-section { margin-bottom: 32px; max-width: 680px; }
+  .paa-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--lego-black);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .paa-item {
+    border: 3px solid var(--lego-black);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: 3px 3px 0 var(--lego-black);
+    transition: box-shadow .1s;
+  }
+  .paa-item:hover { box-shadow: 4px 4px 0 var(--lego-black); }
+  .paa-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lego-text);
+    background: var(--lego-white);
+    user-select: none;
+    gap: 12px;
+  }
+  .paa-question:hover { background: var(--lego-grey); }
+  .paa-toggle {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background: var(--lego-yellow);
+    border: 2px solid var(--lego-black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--lego-black);
+    transition: all .2s;
+    box-shadow: 1px 1px 0 var(--lego-black);
+  }
+  .paa-toggle.open { background: var(--lego-red); color: var(--lego-white); transform: rotate(45deg); }
+  .paa-answer { display: none; border-top: 3px solid var(--lego-black); padding: 16px; background: var(--lego-grey); }
+  .paa-answer.open { display: block; }
+  .paa-answer-text { font-size: 14px; color: var(--lego-text); line-height: 1.7; margin-bottom: 12px; }
+  .paa-answer-source { display: flex; align-items: center; gap: 8px; font-size: 12px; padding-top: 10px; border-top: 2px dashed var(--lego-grey-mid); }
+  .paa-answer-source a { color: var(--lego-blue); text-decoration: none; font-weight: 600; }
+  .paa-answer-source a:hover { text-decoration: underline; }
+
+  /* KNOWLEDGE PANEL */
+  .g-kp {
+    border: 3px solid var(--lego-black);
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 14px;
+    align-self: start;
+    position: sticky;
+    top: 110px;
+    box-shadow: 5px 5px 0 var(--lego-black);
+  }
+
+  /* IMAGE PLACEHOLDER */
+  .g-kp-image-placeholder {
+    width: 100%;
+    height: 220px;
+    background: repeating-linear-gradient(
+      45deg,
+      #FFD700,
+      #FFD700 10px,
+      #FFE033 10px,
+      #FFE033 20px
+    );
+    border-bottom: 3px solid var(--lego-black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .g-kp-image-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,.15);
+  }
+  .placeholder-label {
+    background: var(--lego-black);
+    color: var(--lego-yellow);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 16px;
+    border-radius: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .placeholder-studs {
+    display: flex;
+    gap: 6px;
+    position: relative;
+    z-index: 1;
+  }
+  .placeholder-stud {
+    width: 16px;
+    height: 16px;
+    background: var(--lego-yellow-dark);
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,.2);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+  }
+
+  .g-kp-body { padding: 16px; background: var(--lego-white); }
+
+  .kp-name {
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--lego-black);
+    margin-bottom: 2px;
+  }
+  .kp-type {
+    font-size: 13px;
+    color: #70757a;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .kp-desc {
+    font-size: 13px;
+    color: #4d5156;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--lego-grey-mid);
+  }
+  .kp-row { display: flex; gap: 8px; margin-bottom: 9px; font-size: 13px; }
+  .kp-label { color: #70757a; min-width: 76px; flex-shrink: 0; font-weight: 600; }
+  .kp-value { color: var(--lego-text); }
+  .kp-value a { color: var(--lego-blue); text-decoration: none; font-weight: 600; }
+  .kp-value a:hover { text-decoration: underline; }
+
+  .kp-tag {
+    display: inline-block;
+    background: var(--lego-yellow);
+    color: var(--lego-black);
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    margin: 2px 2px 0 0;
+    font-weight: 700;
+    border: 1.5px solid rgba(0,0,0,.2);
+    font-family: 'Nunito', sans-serif;
+  }
+  .kp-sa-tag { background: #FFF8E1; color: #E65100; border-color: #E65100; }
+  .kp-pt-tag { background: #E8F5E9; color: #2E7D32; border-color: #2E7D32; }
+
+  .kp-socials { display: flex; gap: 6px; padding-top: 12px; border-top: 2px solid var(--lego-grey-mid); margin-top: 10px; flex-wrap: wrap; }
+  .kp-social-btn {
+    border: 2px solid var(--lego-black);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 11px;
+    color: var(--lego-black);
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    background: var(--lego-white);
+    box-shadow: 2px 2px 0 var(--lego-black);
+    transition: all .1s;
+  }
+  .kp-social-btn:hover { background: var(--lego-yellow); transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--lego-black); }
+
+  /* FOOTER STUDS */
+  .footer-studs {
+    background: var(--lego-red);
+    padding: 10px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .footer-stud {
+    width: 14px;
+    height: 14px;
+    background: #C80008;
+    border-radius: 50%;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.3);
+  }
+
+  @media (max-width: 820px) {
+    .g-body { grid-template-columns: 1fr; }
+    .g-kp { display: none; }
+    .g-search-box { width: 100%; }
+    .g-sitelinks { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER STUD ROW -->
+<div class="g-header-studs">
+  <div class="stud-row" id="headerStuds"></div>
+</div>
+
+<header class="g-header">
+  <div class="g-header-inner">
+    <a class="g-logo" href="#">
+      <span class="logo-brick">LEGO</span>
+      <span class="logo-rest">·<span class="logo-search">Search</span></span>
+    </a>
+    <div class="g-search-row">
+      <div class="g-search-box">
+        <input class="g-search-input" type="text" value="Tiago Barros SEO GEO Manager LLM visibility LEGO.com global" readonly />
+        <button class="g-search-btn" onclick="void(0)">🔍 Build It</button>
+      </div>
+    </div>
+    <nav class="g-nav">
+      <a class="g-nav-item active" href="#">🧱 All</a>
+      <a class="g-nav-item" href="https://714go.github.io" target="_blank">🌐 Portfolio</a>
+      <a class="g-nav-item" href="https://marketingautomation.lovable.app" target="_blank">✨ Research</a>
+      <a class="g-nav-item" href="https://linkedin.com/in/barros-tiago-/" target="_blank">💼 LinkedIn</a>
+      <a class="g-nav-item" href="https://orcid.org/0009-0004-1927-5925" target="_blank">◎ ORCID</a>
+      <a class="g-nav-item" href="https://www.behance.net/tiagodebarros1" target="_blank">Be Behance</a>
+      <a class="g-nav-item" href="https://www.strava.com/athletes/67746291" target="_blank">🏃 Strava</a>
+    </nav>
+  </div>
+</header>
+
+<main class="g-body">
+  <div class="g-main">
+
+    <p class="g-result-count">About <span style="font-weight:700">7 results</span> (0.28 seconds) — Tiago Barros, SEO & GEO Manager for LEGO.com</p>
+
+    <div class="g-tools">
+      <span>🇿🇦 South African actively relocating</span>
+      <span>🇵🇹 Portuguese citizen — EU work permit</span>
+      <span>🤖 Built ECB's first GEO framework from scratch</span>
+      <span>📚 Published AI search researcher</span>
+    </div>
+
+    <!-- SA CALLOUT -->
+    <div class="flag-box sa">
+      <div class="flag-label">🇿🇦 South African — Actively Relocating to Europe</div>
+      <div class="flag-text">Tiago is South African and actively relocating to Europe. South Africans carry a well-established professional reputation in the markets LEGO operates across. He holds Portuguese citizenship and full EU working rights — no visa sponsorship required anywhere in the EU or EEA.</div>
+    </div>
+
+    <!-- PT CALLOUT -->
+    <div class="flag-box pt">
+      <div class="flag-label">🇵🇹 Portuguese Citizen — Full EU Work Permit Confirmed</div>
+      <div class="flag-text">Unrestricted EU working rights. Can begin work immediately, wherever LEGO's SEO team is based, without immigration delay or bureaucratic complexity of any kind.</div>
+    </div>
+
+    <!-- AI OVERVIEW -->
+    <div class="ai-card">
+      <div class="ai-card-header">
+        🤖 AI Overview — Tiago Barros, SEO & GEO Manager
+      </div>
+      <div class="ai-card-body">
+        Tiago Barros is one of a small number of SEO professionals who has <strong>built a complete GEO and LLM visibility framework from scratch at institutional scale</strong>, deployed it across three domains and 24 EU language markets at the European Central Bank, and <strong>published peer-reviewed academic research on the methodology</strong>. He monitors LLM-generated responses and tracks Share of Model Voice daily across ChatGPT, Perplexity, Gemini, and Claude. He manages localisation across multilingual markets, partners with engineering on structured data and technical implementation, and brings a test-and-learn curiosity to emerging AI search developments. For LEGO's challenge of maintaining global SEO authority on a world-famous brand website while building genuine LLM visibility, this is the practitioner profile the role is describing.
+      </div>
+      <div class="ai-sources">
+        <a class="ai-chip" href="https://714go.github.io/experience/ecb.html" target="_blank">🏛 ECB GEO Build</a>
+        <a class="ai-chip" href="https://orcid.org/0009-0004-1927-5925" target="_blank">📖 Published Research</a>
+        <a class="ai-chip" href="https://marketingautomation.lovable.app" target="_blank">✨ Interactive Research</a>
+      </div>
+    </div>
+
+    <!-- FEATURED -->
+    <div class="lego-card">
+      <div class="lego-card-header">⭐ Featured Result — Built From Brick One</div>
+      <div class="lego-card-body">
+        <p style="font-size:14px;line-height:1.7;color:var(--lego-text)">Tiago Barros is an SEO and GEO Manager with 6+ years developing and implementing strategies that improve search engine and LLM visibility across international, multilingual platforms. He built the ECB's first GEO framework from scratch — analysing LLM responses, implementing structured data and entity architecture, and tracking AI citation frequency as a reportable metric — with the same test-and-learn curiosity LEGO is looking for in this role. He collaborates with Product and Engineering to embed SEO requirements from the start, works with localisation teams across APAC, EMEA, and Americas markets, and reports organic performance to senior stakeholders with executive-level clarity.</p>
+        <div style="margin-top:14px;padding-top:12px;border-top:2px dashed var(--lego-grey-mid);display:flex;align-items:center;gap:10px;">
+          <div class="g-favicon fav-blue" style="width:20px;height:20px;">T</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">714go.github.io</div>
+            <a href="https://714go.github.io" target="_blank" style="color:var(--lego-blue);font-weight:700;text-decoration:none;font-size:13px;">714go.github.io — Full Portfolio & GEO Case Study →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT 1 -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Digital Portfolio</div>
+          <div class="g-result-source-url">714go.github.io</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io" target="_blank">Tiago Barros — SEO & GEO Manager | LLM Visibility · Localisation · Global Platforms</a>
+      <p class="g-result-snippet">
+        <span class="g-date">Updated 2025 —</span>
+        6+ years developing and implementing SEO and GEO strategies across global multilingual platforms. Built ECB's first GEO framework across <strong>three domains and 24 official EU languages</strong>. Monitors LLM visibility daily — ChatGPT, Perplexity, Gemini, Claude. Partners with engineering on structured data and technical implementation. Reports performance in Adobe Analytics, GSC, Ahrefs, and SEMrush. South African, Portuguese citizen, actively relocating.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io</span>
+        <span>📅 Updated 2025</span>
+        <span>🏷 SEO · GEO · LLM · Localisation · 24 Markets</span>
+      </div>
+      <div class="g-sitelinks">
+        <a class="g-sitelink" href="https://714go.github.io/experience/ecb.html" target="_blank">🏛 ECB GEO Case Study</a>
+        <a class="g-sitelink" href="https://orcid.org/0009-0004-1927-5925" target="_blank">📖 Published Research</a>
+        <a class="g-sitelink" href="https://marketingautomation.lovable.app" target="_blank">✨ Interactive Research</a>
+        <a class="g-sitelink" href="https://www.behance.net/tiagodebarros1" target="_blank">Be Design Portfolio</a>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 2 - ECB -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-blue">T</div>
+        <div>
+          <div class="g-result-source">Tiago Barros — Case Study</div>
+          <div class="g-result-source-url">714go.github.io › experience › ecb</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://714go.github.io/experience/ecb.html" target="_blank">European Central Bank — SEO & GEO Strategy, LLM Visibility & International Localisation</a>
+      <p class="g-result-snippet">
+        Developed and implemented comprehensive SEO and GEO strategies across three institutional domains and 24 EU language markets. Built the ECB's first LLM visibility framework — analysing AI-generated responses, tracking Share of Model Voice, implementing structured data and entity signals. Collaborated with engineering on technical SEO implementation via Jira. Managed localisation workflows across European markets. Reported performance using GA4, Piano Analytics, and Google Search Console. Used Claude Screaming Frog MCP to automate technical audit findings.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 714go.github.io/experience/ecb.html</span>
+        <span>📅 July 2024 – June 2025</span>
+        <span>🏷 GEO Build · LLM Visibility · International SEO · Structured Data</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 3 - Interactive -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon" style="background:#FBBC05;color:#202124;border-radius:4px;border:2px solid rgba(0,0,0,.2);">L</div>
+        <div>
+          <div class="g-result-source">Lovable — AI-Assisted Interactive Build</div>
+          <div class="g-result-source-url">marketingautomation.lovable.app</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://marketingautomation.lovable.app" target="_blank">Marketing Automation: Innovations & Opportunities — Published Research, Interactive</a>
+      <p class="g-result-snippet">
+        Published peer-reviewed academic paper on AI-driven marketing, rebuilt as an interactive gamified web experience using AI-assisted development. The site is itself a GEO experiment — structured for LLM citation, entity-rich, FAQ architecture, semantic headings, and clear attribution signals. A working demonstration of the test-and-learn approach to GEO that LEGO is looking for.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 marketingautomation.lovable.app</span>
+        <span>📅 Published 2026 · Built 2025</span>
+        <span>🏷 GEO Research · AI Citation · Built & Shipped</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- PAA -->
+    <div class="paa-section">
+      <div class="paa-title">🧩 People also ask</div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Does Tiago have a test-and-learn approach to GEO, or is his framework theoretical?</span>
+          <div class="paa-toggle">+</div>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">Entirely practical. At the ECB he built, deployed, measured, and iterated on a GEO programme with no existing playbook. He ran systematic prompt tests across ChatGPT, Gemini, Perplexity, and Claude to understand how institutional content was surfaced, where it was cited accurately and where it was hallucinated, and what content architecture changes improved citation rates. He tracked Share of Model Voice as a reportable metric before most organisations had even started thinking about it. He then published the methodology as peer-reviewed research because the findings were worth documenting. That is the definition of test-and-learn applied to an emerging discipline.</div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:8px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — GEO Test and Learn</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Can Tiago work with localisation across APAC, EMEA, and Americas markets for a global website?</span>
+          <div class="paa-toggle">+</div>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">Yes, at a scale that most candidates applying for this role will not match. Managing hreflang, canonical structures, URL architecture, duplicate content resolution, and localisation quality across 24 simultaneous EU language variants is a more complex localisation challenge than most global ecommerce websites face. The ECB's multilingual environment — where a single structural decision has legal and reputational consequences across 24 Member States — is genuinely rigorous preparation for managing LEGO's APAC, EMEA, and AMS localisation workstreams.</div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:8px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — International SEO</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Does Tiago collaborate effectively with Product and Engineering teams to embed SEO from the start?</span>
+          <div class="paa-toggle">+</div>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">Yes, and this is one of his clearest differentiators. At the ECB he embedded SEO requirements directly into Jira-based development workflows — writing clear tickets with defined acceptance criteria, attending sprint planning, and QA-ing implementations before production deployment. He used Claude Screaming Frog MCP to automate technical audit findings and surface issues at the speed the engineering team needed. He was not an advisory function. He was embedded in the delivery cycle.</div>
+          <div class="paa-answer-source">
+            <div class="g-favicon fav-blue" style="width:14px;height:14px;font-size:8px;">T</div>
+            <a href="https://714go.github.io/experience/ecb.html" target="_blank">714go.github.io — Engineering Partnership</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="paa-item">
+        <div class="paa-question" onclick="togglePAA(this)">
+          <span>Why would Tiago want to work on LEGO.com specifically?</span>
+          <div class="paa-toggle">+</div>
+        </div>
+        <div class="paa-answer">
+          <div class="paa-answer-text">Because LEGO.com is one of the most interesting SEO and GEO challenges on the internet right now. A globally recognised brand with decades of domain authority, serving audiences in every market on earth, with product categories that span every age group and cultural context, and with LLM visibility stakes that are genuinely consequential — when someone asks ChatGPT what to buy a child, LEGO needs to show up accurately and authoritatively. That is not a routine SEO job. It is the kind of problem where the right person can make a visible, lasting difference to how hundreds of millions of people discover one of the world's most loved brands. That is worth doing properly.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 4 - ORCID -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-green">R</div>
+        <div>
+          <div class="g-result-source">ORCID Research Profile</div>
+          <div class="g-result-source-url">orcid.org › 0009-0004-1927-5925</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://orcid.org/0009-0004-1927-5925" target="_blank">Tiago de Barros — Published Research | SEO, GEO & LLM Visibility Methodology</a>
+      <p class="g-result-snippet">
+        <strong>Dabić, M., de Barros, T.S., Vlačić, B. (2026).</strong> Marketing Automation: Innovations and Opportunities. Encyclopedia of Artificial Intelligence in Marketing (Springer). The academic documentation of the GEO and LLM visibility framework built and deployed at the ECB.
+        <strong>de la Roche, C., de Barros, T., et al. (2022).</strong> Consumer Perceptions of Email and Social Media Marketing. International Review of Management and Marketing, 12(4), 29–37.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 orcid.org/0009-0004-1927-5925</span>
+        <span>📅 2022, 2026</span>
+        <span>🏷 Peer-reviewed · GEO Methodology · AI Search</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 5 - LinkedIn -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">in</div>
+        <div>
+          <div class="g-result-source">LinkedIn</div>
+          <div class="g-result-source-url">linkedin.com › in › barros-tiago-</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://linkedin.com/in/barros-tiago-/" target="_blank">Tiago Barros — SEO & GEO Manager, International Search Visibility | LinkedIn</a>
+      <p class="g-result-snippet">
+        6+ years developing and implementing SEO and GEO strategies across global multilingual platforms. ECB alumni across 24 EU languages. Semrush and Ahrefs certified. Published in the Encyclopedia of Artificial Intelligence in Marketing (2026). <strong>South African. Portuguese citizen. Actively relocating. Full EU working rights.</strong> Master of Marketing, magna cum laude.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 linkedin.com/in/barros-tiago-</span>
+        <span>📅 Profile active</span>
+        <span>🏷 Connections · Certifications · Publications</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 6 - Behance -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon fav-dark">Be</div>
+        <div>
+          <div class="g-result-source">Behance</div>
+          <div class="g-result-source-url">behance.net › tiagodebarros1</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.behance.net/tiagodebarros1" target="_blank">Tiago de Barros — Design & Visual Portfolio | Behance</a>
+      <p class="g-result-snippet">
+        Visual communication and brand design work. Relevant because great SEO for a design-led brand like LEGO is also information architecture — and Tiago brings the visual sensibility to understand how structure, hierarchy, and user experience connect to discoverability, not just the technical mechanics.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 behance.net/tiagodebarros1</span>
+        <span>📅 Portfolio active</span>
+        <span>🏷 Brand Design · Visual Identity · Information Architecture</span>
+      </div>
+    </div>
+
+    <hr class="g-divider" />
+
+    <!-- RESULT 7 - Strava -->
+    <div class="g-result">
+      <div class="g-result-url-row">
+        <div class="g-favicon" style="background:#FC4C02;border-radius:4px;border:2px solid rgba(0,0,0,.2);">S</div>
+        <div>
+          <div class="g-result-source">Strava</div>
+          <div class="g-result-source-url">strava.com › athletes › 67746291</div>
+        </div>
+      </div>
+      <a class="g-result-title" href="https://www.strava.com/athletes/67746291" target="_blank">Tiago Barros — Strava | Consistent. Curious. Tracks Everything.</a>
+      <p class="g-result-snippet">
+        LEGO builds things that last. The people who maintain and grow global SEO for a beloved brand over time are the ones who show up consistently, track their own performance obsessively, and find the process of getting better genuinely interesting. This profile is that person.
+      </p>
+      <div class="g-result-meta">
+        <span>🔗 strava.com/athletes/67746291</span>
+        <span>📅 Active</span>
+        <span>🏷 Running · Consistency · Data-Driven</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KNOWLEDGE PANEL -->
+  <aside class="g-kp">
+    <!-- IMAGE PLACEHOLDER — INSERT PHOTO HERE -->
+    <div class="g-kp-image-placeholder">
+      <div class="placeholder-studs">
+        <div class="placeholder-stud"></div>
+        <div class="placeholder-stud"></div>
+        <div class="placeholder-stud"></div>
+        <div class="placeholder-stud"></div>
+      </div>
+      <div class="placeholder-label">📸 Insert Photo Here</div>
+      <div class="placeholder-studs">
+        <div class="placeholder-stud"></div>
+        <div class="placeholder-stud"></div>
+        <div class="placeholder-stud"></div>
+        <div class="placeholder-stud"></div>
+      </div>
+    </div>
+    <!-- END IMAGE PLACEHOLDER -->
+
+    <div class="g-kp-body">
+      <div class="kp-name">Tiago Barros</div>
+      <div class="kp-type">SEO & GEO Manager — Global Platforms</div>
+      <div class="kp-desc">Built ECB's first GEO framework across 24 EU languages. Published AI search researcher. South African relocating to Europe. Full EU working rights. 6+ years developing strategies that improve search engine and LLM visibility.</div>
+
+      <div class="kp-row"><span class="kp-label">Nationality</span><span class="kp-value"><span class="kp-tag kp-sa-tag">🇿🇦 South African</span></span></div>
+      <div class="kp-row"><span class="kp-label">Citizenship</span><span class="kp-value"><span class="kp-tag kp-pt-tag">🇵🇹 Portuguese · Full EU Rights</span></span></div>
+      <div class="kp-row"><span class="kp-label">Languages</span><span class="kp-value">English (native C1+) · Portuguese (B2) · Dutch (A2)</span></div>
+      <div class="kp-row"><span class="kp-label">Education</span><span class="kp-value">MSc Marketing, magna cum laude — Católica Porto</span></div>
+      <div class="kp-row"><span class="kp-label">Research</span><span class="kp-value"><a href="https://orcid.org/0009-0004-1927-5925" target="_blank">ORCID 0009-0004-1927-5925</a></span></div>
+      <div class="kp-row"><span class="kp-label">Email</span><span class="kp-value"><a href="mailto:tiagodb3@gmail.com">tiagodb3@gmail.com</a></span></div>
+      <div class="kp-row"><span class="kp-label">Certs</span><span class="kp-value">
+        <span class="kp-tag">Semrush AI Search</span>
+        <span class="kp-tag">Ahrefs</span>
+        <span class="kp-tag">GA4</span>
+        <span class="kp-tag">DMI</span>
+      </span></div>
+
+      <div class="kp-socials">
+        <a class="kp-social-btn" href="https://714go.github.io" target="_blank">🌐 Portfolio</a>
+        <a class="kp-social-btn" href="https://marketingautomation.lovable.app" target="_blank">✨ Research</a>
+        <a class="kp-social-btn" href="https://linkedin.com/in/barros-tiago-/" target="_blank">in LinkedIn</a>
+        <a class="kp-social-btn" href="https://orcid.org/0009-0004-1927-5925" target="_blank">◎ ORCID</a>
+        <a class="kp-social-btn" href="https://www.behance.net/tiagodebarros1" target="_blank">Be Behance</a>
+        <a class="kp-social-btn" href="https://www.strava.com/athletes/67746291" target="_blank">🏃 Strava</a>
+      </div>
+    </div>
+
+    <div class="footer-studs" id="footerStuds"></div>
+  </aside>
+
+</main>
+
+<script>
+// Generate studs dynamically
+function makeStuds(containerId, count) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = containerId === 'headerStuds' ? 'stud' : 'footer-stud';
+    c.appendChild(s);
+  }
+}
+makeStuds('headerStuds', 60);
+makeStuds('footerStuds', 60);
+
+// PAA toggle
+function togglePAA(el) {
+  const answer = el.nextElementSibling;
+  const toggle = el.querySelector('.paa-toggle');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.paa-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.paa-toggle').forEach(t => t.classList.remove('open'));
+  if (!isOpen) {
+    answer.classList.add('open');
+    toggle.classList.add('open');
+  }
+}
+</script>
+</body>
+</html>
